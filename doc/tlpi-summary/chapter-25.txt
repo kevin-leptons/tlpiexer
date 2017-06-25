@@ -1,0 +1,29 @@
+CHAPTER 25
+PROCESS TERMINATION
+
+OVERVIEW
+
+    This chapter describes what happens when a process terminates. We begin by
+    describing the use of exit() and _exit() to terminate a process. We then
+    discuss the use of exit handlers to automatically perform cleanups when a
+    process calls exit(). We conclude by considering some interactions between
+    fork(), stdio buffers, and exit().
+
+SUMMARY
+
+    A process can terminate either abnormally or normally. Abnormal
+    termination occurs on delivery of certain signals, some of which also
+    cause the process to produce a core dump file.
+
+    Normal termination is accomplished by calling _exit() or, more usually,
+    exit(), which is layered on top of _exit(). Both _exit() and exit() take
+    an integer argument whose least significant 8bits define the termination
+    status of the process. By convention, a status of 0 is used to indicate
+    successful termination, and a nonzero status indicates unsuccessful
+    termination.
+
+    As part of both normal and abnormal process termination, the kernel
+    performs various cleanup steps. Terminating a process normally by calling
+    exit() additionally causes exit handlers registered using atexit()
+    on_exit() to be called (in reverse order of registration), and causes
+    stdio buffers to be flushed.

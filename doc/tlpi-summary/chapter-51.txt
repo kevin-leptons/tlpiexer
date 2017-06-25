@@ -1,0 +1,53 @@
+CHAPTER 51
+INTRODUCTION TO POSIX IPC
+
+OVERVIEW
+
+    The POSIX.1b realtime extensions defined a set of IPC mechanisms that are
+    analogous to the System V IPC mechanisms described in Chapters 45 to 48
+    (One of the POSIX.1b developers' aims was to devise a set of IPC
+    mechanisms that did not suffer the deficiencies of the System V IPC
+    facilities). These IPC mechanisms are collectively referred to as POSIX
+    IPC. The three POSIX IPC mechanisms are following:
+
+        Message queues can be used to pass messages between processes. As with
+        System V message queues, message boundaries are preserved, so that
+        readers and writers communicate in units of messages (as opposed to
+        the undelimited byte stream provided by a pipe). POSIX message queues
+        permit each message to be assigned a priority, which allows
+        high-priority messages to be queued ahead of low-priority messages.
+        This provides some of the same functionality that is available via the
+        type field of System V messages.
+
+        Semaphore permit multiple process to synchronize their actions. As
+        with System V semaphores, a POSXI semaphore is a kernel-maintained
+        integer whose value is never permitted to go below 0. POSIX semaphores
+        are simpler to use than System V semaphores: they are allocated
+        individually (as opposed to System V semaphore sets), and they are
+        operated on individually using two operations that increase and 
+        decrease a semaphore's value by one (as opposed to the ability of
+        the semop() system call to atomically add or subtract arbitrary
+        values from multiple semaphores in a System V semaphores set).
+
+        Shared memory enables multiple processes to shared the same region of
+        memory. As with System V shared memory, POSIX shared memory provides
+        fast IPC. Once one process had updated the shared memory, the changes
+        is immediately visible to other processes sharing the same region.
+
+    This chapter provides an overview of the POSIX IPC facilities, focusing on
+    their common features.
+
+SUMMARY
+
+    POSIX IPC is the general name given to three IPC mechanisms - message
+    queues, semaphores, and shared memory - that were devised by POSIX.1b as
+    alternatives to the analogous System V IPC mechanism.
+
+    The POSIX IPC interface is more consistent with the traditional UNIX file
+    model. IPC object are identified by names, and managed using open, close,
+    and unlink calls that operate in a manner similar to the analogous
+    file-related system calls.
+
+    POSIX IPC provides an interface that is superior in many respects to the
+    System V IPC interface. However, POSIX IPC is somewhat less portable than
+    System V IPC.

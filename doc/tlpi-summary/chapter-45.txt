@@ -1,0 +1,91 @@
+CHAPTER 45
+INTRODUCTION TO SYSTEM V IPC
+
+OVERVIEW
+
+    System V IPC is the label used to refer to three different mechanisms
+    for interprocess communication:
+
+        Message queues can be used to pass messages between processes. Message
+        queues are somewhat like pipes, but differ in two important respects.
+        First, message boundaries are preserved, so that readers and writers
+        communicate in units of messages, rather than via an undelimited byte
+        stream. Second, each message includes an integer type field, and it is
+        possible to select messages
+        by type, rather than reading them in the order in which they were
+        written.
+
+        Semaphores permit multiple processes to synchronize their actions.
+        A semaphore is a kernel-maintained integer value that is visible to
+        all processes that have the necessary permissions. A process indicates
+        to its peers that it is performing some action by making an
+        appropriate modification to the value of the semaphore.
+
+        Shared memory enables multiple processes to share the same region
+        (called a segment) of memory (i.e., the same page frames are mapped
+        into the virtual memory of multiple processes). Since access to
+        user-space memory is a fast operation, shared memory is one of the
+        quickest methods of IPC: once one process has updated the shared
+        memory, the change is immediately visible to other processes sharing
+        the same segment.
+
+    Although these three IPC mechanisms are quite diverse in function, there
+    are good reasons for discussing them together. One reason is that they
+    were developed together, first appearing in the late 1970s in Columbus
+    UNIX. This was a Bell-internal UNIX implementation used for database and
+    transaction-processing systems for telephone company record keeping and
+    administration. Around 1983, these IPC mechanisms made their way into
+    mainstream UNIX by appearing in System V-hence the appellation System V
+    IPC.
+
+    A more significant reason for discussing the System V IPC mechanisms
+    together is that their programming interfaces share a number of common
+    characteristics, so that many of the same concepts apply to all of these
+    mechanisms.
+
+        Because System V IPC is required by SUSv3 for XSI conformance, it is
+        sometimes alternatively labeled XSI IPC.
+
+    This chapter provides an overview of the System V IPC mechanisms and
+    details those features that are common to all three mechanisms. The three
+    mechanisms are then discussed individually in the following chapters.
+
+        System V IPC is a kernel option that is configured via the
+        CONFIG_SYSVIPC option.
+
+SUMMARY
+
+    System V IPC is the name given to three IPC mechanisms that first appeared
+    widely in System V, and have subsequently been ported to most UNIX
+    implementations and incorporated into various standards. The three IPC
+    mechanisms are message queues, which allow processes to exchange messages;
+    semaphores, which allow processes to synchronize access to shared
+    resources; and shared memory, which allows two or more processes to share
+    the same pages of memory.
+
+    The three IPC mechanisms have many similarities in their APIs and
+    semantics. For each IPC mechanism, a get system call creates or opens an
+    object. Given an integer key, the get calls return an integer identifier
+    used to refer to the object in subsequent system calls. Each IPC mechanism
+    also have a corresponding a ctl call that is used to delete an object and
+    to retrieve and modify various attributes (e.g., ownership and
+    permissions) in an object's associated data structure.
+
+    The algorithm used to generate identifiers for new IPC objects is designed
+    to minimize the possibility of the same identifier being (immediately)
+    reused if an object is deleted, even if the same key is used to create a
+    new object. This enables client-server applications to function correctly
+    a restarted server process is able to detect and remove IPC objects
+    created by its predecessor, and this action invalidates the identifiers
+    held by any clients of the previous server process.
+
+    The ipcs command lists the System V IPC objects that currently exist on
+    the system. The ipcrm commands is use to remove System IPC objects.
+
+    On Linux, file in the /proc/sysvipc directory can be used to obtain
+    information about all of the System V IPC objects on the system.
+
+    Each IPC mechanism has an associated set of limits that can be used to
+    avoid exhaustion of system resources by preventing the creation of an
+    arbitrary number of IPC objects. Various file under the /proc/sys/kernel
+    directory can be used to view and modify these limits.

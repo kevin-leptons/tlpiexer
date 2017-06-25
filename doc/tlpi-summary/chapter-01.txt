@@ -1,0 +1,76 @@
+CHAPTER 01
+HISTORY AND STANDARD
+
+OVERVIEW
+
+    Linux is a member of the UNIX family of operating systems. In computing
+    terms, UNIX has a long history. The first part of this chapter provides a
+    brief outline of that history. We begin with a description of the origins
+    of the UNIX system and the C programming language, and then consider the
+    two key currents that led to the Linux system as it exists today: the GNU
+    project and the development of the Linux kernel.
+
+    One of the notable features of the UNIX system is that its development was
+    not controlled by a single vendor or organization. Rather, many groups,
+    both commercial and noncommercial, contributed to its evolution. This
+    history resulted in many innovative features being added to UNIX, but
+    also had the negative consequence that UNIX implementations became
+    increasingly difficult.  This led to a drive for standardization of
+    UNIX implementations, which we discuss in the second part of this chapter.
+
+SUMMARY
+
+    The UNIX system was first implemented in 1969 on a Digital PDP-7
+    minicomputer by Ken Thompson at Bell Laboratories (part of AT&T). The
+    operating system drew many ideas, as well as its punned name, from the
+    earlier MULTICS system. By 1973, UNIX had been moved to the PDP-11
+    mini-computer and rewrite in C, as programming language designed and
+    implemented at Bell Laboratories by Dennis Ritchie. Legally prevented
+    from selling UNIX, AT&T instead distributed the complete system to
+    universities for a nominal charge. This distribution included source code,
+    and became very popular within universities, since it provided a cheap
+    operating system whose code could be studied and modified by computer
+    science academics and students.
+
+    The University of California at Berkeley played a key role in the
+    development of the UNIX system. There, Ken Thompson and a number of
+    graduate students extended the operating system. By 1979, the University
+    was producing its own UNIX distribution, BSD. This distribution became
+    widespread in academia and formed the basis for several commercial
+    implementations.
+
+    Meanwhile, the breakup of the AT&T monopoly permitted the company to sell
+    the UNIX system. this resulted in the other major variant of UNIX System
+    V, which also formed the basis for several commercial implementations.
+
+    Two different currents led to the development of (GNU/) Linux. One of
+    these was the GNU project, founded by Richard Stallman. By the late 1980s,
+    the GNU project had produced an almost complete, freely distributable UNIX
+    implementation. The one part lacking was a working kernel. In 1991,
+    inspired by the Minix kernel written by Andrew Tanenbaum,, Linus Torvalds
+    produced a working UNIX kernel for the Intel x86-32 architecture. Torvalds
+    invited other programmers to join him in improving the kernel. Many
+    programmers did so, and, over time, Linux was extended and ported to a
+    wide variety of hardware architectures.
+
+    The portability problems that arose from the variations in UNIX and C
+    implementations that existed by the late 1980s created a strong pressure
+    for standardization. The C language was standardized in 1989 (C89), and a
+    revised standard was produced in 1999 (C99). The first attempt to
+    standardize the operating system interface yielded POSIX.1, ratified as an
+    IEEE standard in 1988, and as an ISO standard in 1990. during the 1990s,
+    further standard were drafted, including various versions of the Single
+    UNIX Specification. In 2001, the combined POSIX 1003.1-2001 and SUSv3
+    standard was ratified. This standard consolidates and extends various
+    earlier POSIX standards and earlier version of the Single UNIX
+    Specification. In 2008, a less wide-ranging revision of the standard was
+    completed, yielding the combined POSIX 1003.1-2008 and SUSv4 standard.
+
+    Unlike most commercial UNIX implementations, Linux separates
+    implementation from distribution. Consequently, there is no single
+    "official" Linux distribution. Each Linux distributor's offering consists
+    of a snapshot of the current stable kernel, with various patches applied.
+    the LSB develops and promotes a set of standards for Linux systems with
+    the aim of ensuring binary application compatibility across Linux
+    distributions, so that compiled applications should be able to run on any
+    LSB-conformant system running on the the same hardware.

@@ -1,0 +1,25 @@
+CHAPTER 40
+LOGIN ACCOUNTING
+
+OVERVIEW
+
+    Login accounting is concerned with recording which users are currently
+    logged in to the system, and recording past logins and logouts. This
+    chapter looks at the login accounting files and the library functions used
+    to retrieve and update the information they contain. We also describe the
+    steps that an application providing a login service should perform in
+    order to update these files when user logs in and out.
+
+SUMMARY
+
+    Login accounting records the users currently logged in, as well as all
+    past logins. This information is maintained in three files: the utmp file,
+    which maintains a record of all currently logged-in users; the wtmp, which
+    is an audit trail of all logins and logouts; and the lastlog file, which
+    records the time of last login for each user. Various commands, such as
+    who and last, use the information in these files.
+
+    The C library provides functions to retrieve and update the information in
+    the login accounting files. Applications providing login services should
+    use these functions to update the login accounting files, so that
+    commands depending on this information operate correctly.

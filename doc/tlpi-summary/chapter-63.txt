@@ -1,0 +1,74 @@
+CHAPTER 63
+ALTERNATIVE I/O MODELS
+
+OVERVIEW
+
+    This chapter discusses three alternatives to the conventional file I/O
+    model that we have employed in most programs shown in this book:
+
+        I/O multiplexing (the select() and poll() system calls);
+
+        signal-driven I/O;
+
+        the Linux-specific epoll API.
+
+SUMMARY
+
+    In this chapter, we explored various alternatives to the standard model
+    for performing I/O: I/O multiplexing (select() and poll()), signal-driven
+    I/O, and the Linux-specific epoll API. All of these mechanisms allow us to
+    monitor multiple file descriptors to see if I/O is possible on any of
+    them. None of these mechanisms actually performs I/O. Instead, once we
+    have determined that a file descriptors is ready, we use the traditional
+    I/O system calls to perform the I/O.
+
+    The select() and poll() I/O multiplexing calls simultaneously monitor
+    multiple file descriptors to see if I/O is possible on any of the
+    descriptors. With both system calls, we pass a complete list of
+    to-be-checked file descriptors to the kernel on each system call, and the
+    kernel returns a modified list indicating which descriptors are ready. The
+    fact that complete file descriptor lists are passed and checked on each
+    call means that select() and poll() perform poorly when monitoring large
+    numbers of file descriptors.
+
+    Signal-driven I/O allows a process to receive a signal when I/O is
+    possible on a file descriptor. To enable signal-driven I/O, we must
+    establish a handler for the SIGIO signal, set the owner process that is to
+    receive the signal, and enable signal generation by setting the O_ASYNC
+    open file status flag. This mechanism offers significant performance
+    benefits over I/O multiplexing when monitoring large numbers of file
+    descriptors. Linux allows us to change the signal used for notification,
+    and if we instead employ realtime signal, then multiple notifications can
+    be queued, and the signal handler can use its siginfo_t argument to
+    determine the file descriptor and event type that generated the signal.
+
+    Like signal-driven I/O, epoll offers superior performance when monitoring
+    large numbers of file descriptors. The performance advantage of epoll (and
+    signal-driven I/O) derives from the fact that kernel "remembers" the list
+    of the file descriptors that a process is monitoring (by contrast with
+    select() and poll(), where each system call must again tell the kernel
+    which file descriptors to check). The epoll API has some notable
+    advantages over the use of signal-driven I/O: we avoid the complexities of
+    dealing with signals and can specify which types of I/O events (e.g.,
+    input or output) are to be monitored.
+
+    In the course of this chapter, we drew a distinction between
+    level-triggered and edge-triggered readiness notification. With a
+    level-triggered notification model, we are informed whether I/O is
+    currently possible on a file descriptor. By contrast, edge-triggered
+    notification informs us whether I/O activity has occurred on a file
+    descriptor since it was lat monitored. The I/O multiplexing system calls
+    offer a level-triggered notification model; signal-driven I/O approximates
+    to an edge-triggered model; and epoll is capable of operating under either
+    model (level-triggered is the default). Edge-triggered notification is
+    usually employed in conjunction with nonblocking I/O.
+
+    We concluded the chapter by looking at a problem that sometimes faces
+    programs that monitor multiple file descriptors: how to simultaneously
+    also wait for the delivery of a signal. The usual solution to this problem
+    is the so-called self-pipe trick, where a handler for the signal writes a
+    byte to a pipe whose read end is included among the set of monitored file
+    descriptors. SUSv3 specifies pselect(), a variation of select() that
+    provides another solution to this problem. However, pselect() is not
+    available on all UNIX implementation. Linux also provides the analogous
+    (but non standard) ppoll() and epoll_pwait().

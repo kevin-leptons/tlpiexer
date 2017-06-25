@@ -1,0 +1,41 @@
+CHAPTER 06
+PROCESSES
+
+OVERVIEW
+
+    In this chapter, we look at the structure of a process, paying particular
+    attention to the layout and contents of a process's virtual memory. We
+    also examine some of the attributes of a process. In later chapters, we
+    examine further process attributes (for example, process credentials in
+    Chapter 9, and process priorities and scheduling in Chapter 35). In
+    Chapter 24 to 27, we look at how processes are created, how they
+    terminate, and how they can be made to execute new programs.
+
+SUMMARY
+
+    Each process has a unique process ID and maintains a record of its
+    parent's process ID.
+
+    The virtual memory of a process is logically divided into a number of
+    segments: text, (initialized and uninitialized) data, stack, and heap.
+
+    The stack consists of a series of frames, with a new frame being added as
+    a function is invoked and removed when the function returns. Each frame
+    contains the local variables, function arguments, and call linkage
+    information for a single function invocation.
+
+    The command-line arguments supplied when a program is invoked are made
+    available via the argc and argv arguments to main(). By convention,
+    argv[0] contains the name used to invoke the program.
+
+    Each process receives a copy of its parent's environment list, a set of
+    name-value pairs. The global variable environ and various library
+    functions allow a process to access and modify the variables in its
+    environment list.
+
+    The setjmp() and longjmp() functions provide a way to perform a nonlocal
+    goto from one function to another (unwinding the stack). In order to avoid
+    problems with compiler optimization, we may need to declare variables with
+    the volatile modifier when making use of these functions. Nonlocal gotos
+    can render a program difficult to read and maintain, and should be avoided
+    whenever possible.

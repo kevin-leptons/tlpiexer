@@ -1,0 +1,47 @@
+CHAPTER 42
+ADVANCED FEATURES OF SHARED LIBRARIES
+
+OVERVIEW
+
+    The previous chapters covered the fundamentals of shared libraries. This
+    chapter describes a number of advanced features of shared libraries,
+    including the following:
+
+        - dynamically loading shared libraries;
+        - controlling the visibility of symbols defined by a shared library;
+        - using linker scripts to create versioned symbols;
+        - using initialization and finalization functions to automatically
+          execute code when a library is loaded and unloaded;
+        - shared library preloading;
+        - using LD_DEBUG to monitor the operation of the dynamic linker.
+
+    The dynamic linker provides the dlopen API, which allows programs to
+    explicitly load additional shared libraries at run time. This allows
+    programs to implement plug-in functionality.
+
+    An important aspect of shared library design is controlling symbol
+    visibility, so that the library exports only those symbols (functions and
+    variables) that should actually be used by programs linked against the
+    library. We looked at a range of techniques that can be used to control
+    symbol visibility. Among these techniques was the use of version scripts,
+    which provide fine-grained control of symbol visibility.
+
+    We also show how version scripts can be used to implement a scheme that
+    allows a single shared library to export multiple definitions of a symbol
+    for use by different applications linked against the library (Each
+    application use the definition that was current when the application was
+    statically linked against the library). This technique provides an
+    alternative to the traditional library versioning approach of using major
+    and minor version numbers in the shared library real name.
+
+    Defining initialization and finalization functions within a shared library
+    allows us to automatically execute code when the library is loaded and
+    unloaded.
+
+    The LD_PRELOAD environment variable allows us to preload shared libraries.
+    Using this mechanism, we can selectively override functions and other
+    symbols that the dynamic linker would normally find other shared
+    libraries.
+
+    We can assign various values to the LD_DEBUG environment variable in order
+    to monitor the operation of the dynamic linker.

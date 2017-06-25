@@ -1,0 +1,80 @@
+CHAPTER 47
+SYSTEM V SEMAPHORES
+
+OVERVIEW
+
+    This chapters describes System V semaphores. Unlike the IPC mechanisms
+    described in previous chapters, System V semaphores are not used to
+    transfer data between processes. Instead, they allow processes to
+    synchronize their actions. One common use of a semaphores is to
+    synchronize access to a block of shared memory, in order to prevent one
+    process from accessing the shared memory at the same time as another
+    process is updating it.
+
+    A semaphore is a kernel-maintained integer whose value is restricted to
+    being greater than or equal to 0. Various operations (i.e., system calls)
+    can be performed on a semaphore, include the following.
+
+        - setting the semaphore to an absolute value
+        - adding a number to the current value of the semaphore
+        - subtracting a number from the current value of the semaphore
+        - waiting for the semaphore value to be equal to 0
+
+    The last two of these operations may cause the calling process to block.
+    When lowering a semaphore value, the kernel blocks any attempt to
+    decrease the value below 0. Similarly, waiting for a semaphore to equal
+    0 blocks the calling process if the semaphore value is not currently 0.
+    In both cases, the calling process remains blocked until some other
+    process alters the semaphore to a value that allows the operation to
+    proceed, at which point the kernel wakes the blocked process. Figure 4701
+    shows the use of a semaphore to synchronize the actions of two processes
+    that alternately move  the semaphore value between 0 and 1.
+
+    In term of controlling the actions of a process, a semaphore has no meaning
+    in and of itself. Its meaning is determined only by the associations give
+    to by the processes using the semaphores. Typically, processes agree on a
+    convention that associates a semaphore with a shared resource, such as a
+    region of shared memory. Other uses of semaphores are also possible, such
+    as synchronization between parent and child-processes after fork()
+    (In Section 24.5, we looked at the use of signals to accomplish the
+    same task).
+
+SUMMARY
+
+    System V semaphores allow processes to synchronize their actions. This
+    useful when a process must gain exclusive access to some shared resource,
+    such as a region of shared memory.
+
+    Semaphores are created and operated upon in sets containing one or more
+    semaphores. Each semaphore within a set is an integer whose value is
+    always greater than or equal to 0. The semop() system call allows the
+    caller to add an integer to a semaphore, subtract an integer from a
+    semaphore, or wait for a semaphore to equal 0. The last two of these
+    operations may cause the caller to block.
+
+    A semaphore implementation is not required to initialize the members of a
+    new semaphore set, so an application must initialize the set after
+    creating it. When any of a number of peer processes may try to create and
+    initialize the semaphore, special are must be taken to avoid the race
+    condition that results from the fact that these two steps are performed
+    via separate system calls.
+
+    Where multiple processes are trying to decrease a semaphore by the same
+    amount, it is indeterminate which process will actually be permitted to
+    perform the operation first. However, where different processes are trying
+    to decrease a semaphore by different amounts, the operations complete in
+    the order in which they become possible, and we may need to take care to
+    avoid scenarios where a process is starved because the semaphore value
+    never reaches a level that would allow the process's operation to proceed.
+
+    The SEM_UNDO flag allows a process's semaphore operations to be
+    automatically undone on process termination. This can be useful to avoid
+    scenarios where a process accidentally terminates, leaving a semaphore in
+    a state that causes other processes to block indefinitely waiting for the
+    semaphore's value to be changed by the terminated processes.
+
+    System V semaphores are allocated and operated upon in sets, and can be
+    increased and decreased by arbitrary amounts. This provides more
+    functionality than is needed by most applications. A common requirement is
+    for individual binary semaphores, which take on only the value 0 and 1. We
+    showed how to implement binary semaphores on top of System V semaphores.

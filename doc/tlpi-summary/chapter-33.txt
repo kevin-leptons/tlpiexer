@@ -1,0 +1,29 @@
+CHAPTER 33
+THREADS: FURTHER DETAILS
+
+OVERVIEW
+
+    This chapter provides further details on various aspects of POSIX threads.
+    We discuss the interaction of threads with aspects of the traditional UNIX
+    API - in particular, signals and the process control primitives (fork(),
+    exec(), and _exit()). We also provide an overview of the two POSIX threads
+    implementations available on Linux - LinuxThreads and NPTL and note where
+    each of these implementations deviates from the SUSv3 specification of
+    Pthreads.
+
+SUMMARY
+
+    Threads don't mix well with signals; multithreaded application designs
+    should avoid the use of signals whenever possible. If a multithreaded
+    application must deal with asynchronous signals, usually the cleanest way
+    to do so is to block signals in all threads, and have a single dedicated
+    thread that accepts incoming signals using sigwait() (or similar). This
+    thread can then safely perform tasks such as modifying shared variables
+    (under mutex control) and calling non-async-signal-safe functions.
+
+    Two threading implementations are commonly avaiable on Linux: LinuxThreads
+    and NPTL. LinuxThreads has been avaiable on Linux for many years, but
+    there are a number of points where it doesn't conform to the requirements
+    of SUSv3 and it is now obsolate. The more recent NPTL implementation
+    provides closer SUSv3 conformance and superior performance, and is the
+    implementation provided in modern Linux distributions.

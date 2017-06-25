@@ -1,0 +1,91 @@
+CHAPTER 62
+TERMINAL
+
+OVERVIEW
+
+    Historically, users accessed a UNIX system using a terminal connected via
+    a serial line (an RS-232 connection). Terminals were cathode ray tubes
+    (CRTs) capable of displaying characters and, in some cases, primitive
+    graphics. Typically, CRTs provided a monochrome display of 24 lines by 80
+    columns. By today's standards, these CRTs were small and expensive. In
+    even earlier times, terminals were sometimes hard-copy teletype devices.
+    Serial lines were also used to connect other devices, such as printers and
+    modems, to a computer or to connect one computer to another.
+
+    Especially during the early years of UNIX, terminal devices were not
+    standardized, which mean that different character sequences were required
+    to perform operations such as moving the cursor to the beginning of the
+    line or the top of the screen (Eventually, some vendor implementations of
+    such escape sequences - for example, Digital's VT-100 - became de facto
+    and, ultimately, ANSI standard, but a wide variety of terminal types
+    continued to exist). This lack of standardization meant that was difficult
+    to write portable programs that used terminal features. The vi editor was
+    an early example of a program with such requirements. The termcap and
+    terminfo databases (described in [Strang et al., 1988]), which tabulate
+    how to perform various screen-control operations for a wide variety of
+    terminal types, and the curses library ([Strang, 1986]) were developed in
+    response to this lack of standardization.
+
+    It is no longer common to see a conventional terminal. The usual interface
+    to modern UNIX systems is an X Window System window manager on a high
+    performance bit-mapped graphical monitor (An old-style terminal provided
+    functionality roughly equivalent to a single terminal window - an xterm or
+    similar - in an X Window System. The fact that the user of such a terminal
+    had only a single "window" to the system was the driving force behind the
+    development of the job-control facilities described in Section 34.7).
+    Similarly, many devices (e.g., printers) that were once connected directly
+    to a computer are now often intelligent devices connected via network.
+
+    All of the above is a preamble to saying that the need to program terminal
+    devices is less frequent than it used to be. Therefore, this chapter
+    focuses on the aspects of terminal programming that are particularly
+    relevant to software terminal emulators (i.e., xterm and similar). It
+    gives only brief coverage to serial lines; references for further
+    information about serial programming are provided at the end of this
+    chapter.
+
+SUMMARY
+
+    On early UNIX systems, terminals were real hardware devices connected to a
+    computer via serial lines. Early terminals were not standardized, meaning
+    that different escape sequences were required to program the terminals
+    produced by different vendors. On modern workstations, such terminals have
+    been superseded by bit-mapped monitors running the X Window System.
+    However, the ability to program terminals is still required when dealing
+    with virtual devices, such as virtual consoles and terminal emulators
+    (which employ pseudoterminals), and real devices connected via serial
+    lines.
+
+    Terminal settings (with the exception of the terminal window size) are
+    maintained in a structure of type termios, which contains four bit-mask
+    fields that control various terminal settings and an array that defines
+    the various special characters interpreted by the terminal driver. The
+    tcgetattr() and tcsetattr() functions allow a program to retrieve and
+    modify the terminal settings.
+
+    When performing input, the terminal driver can operate in two different
+    modes. In canonical mode, input is gathered into lines (terminated by one
+    of the line-delimiter characters) and line editing is enabled. By
+    contrast, noncanonical mode allows an application to read terminal input a
+    character at a time, without needing to wait for the user to type a
+    line-delimiter character. Line editing is disabled in noncanonical mode.
+    Completion of a noncanonical mode read is controlled by the MIN and TIME
+    fields of the termios structure, which determine the minimum number of
+    characters to be read and a timeout to be applied to the read operation.
+    We described four distinct cases for the operation of noncanonical reads.
+
+    Historically, the Seventh Edition and BSD terminal drivers provided three
+    input modes - cooked, cbreak, and raw - which performed varying degrees of
+    processing of terminal input an output. Cbreak and raw models can be
+    emulated by changing various fields within the termios structure.
+
+    A range of functions perform various other terminal operations. These
+    include changing the terminal line speed and performing line-control
+    operations (generating a break condition, pausing until output has been
+    transmitted, flushing terminal input and output queues, and suspending or
+    resuming transmission of data in either direction between the terminal and
+    the computer). Other functions allow us to check if a given file
+    descriptor refers to a terminal an obtain the name of that terminal. The
+    ioctl() system call can be used to retrieve and modify the terminal window
+    size recorded by the kernel, and to perform a range of other
+    terminal-related operations.

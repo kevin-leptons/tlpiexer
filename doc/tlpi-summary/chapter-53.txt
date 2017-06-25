@@ -1,0 +1,31 @@
+CHAPTER 53
+POSIX SEMAPHORES
+
+OVERVIEW
+
+    This chapter describes POSIX semaphores, which allow processes and threads
+    to synchronize access to shared resources. In Chapter 47, we described
+    System V semaphores, and we'll assume that the reader is familiar with the
+    general semaphore concepts and rationale for using semaphores that were
+    presented at the start of that chapter. During the course of this chapter,
+    we'll make comparisons between POSIX semaphores and System V semaphores
+    to clarify the ways in which these two semaphore APIs are the same and the
+    ways in which they differ.
+
+SUMMARY
+
+    POSIX semaphores allow processes of threads to synchronize their actions.
+    POSIX semaphores come in two types: named and unnamed. A named semaphore
+    is identified by a name, and can be shared by any processes that have
+    permission to open the semaphore. An unnamed semaphore has no name, but
+    processes or threads can share the same semaphore by placing it in a
+    region of memory that they shared (e.g., in a POSIX shared memory object
+    for process sharing, or in a global variable for thread sharing).
+
+    The POSIX semaphore interfaces is simpler than the System V semaphore
+    interface. Semaphores are allocated and operated on individually, and the
+    wait and post operations adjust a semaphore's value by one.
+
+    POSIX semaphores have a number of advantages over System V semaphores, but
+    they are somewhat less portable. For synchronization within multithreaded
+    applications, mutexes are generally preferred over semaphores.

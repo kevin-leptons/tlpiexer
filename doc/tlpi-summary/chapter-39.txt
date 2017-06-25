@@ -1,0 +1,21 @@
+CHAPTER 39
+CAPABILITIES
+
+OVERVIEW
+
+   This chapter describes the Linux capabilities scheme, which divides the
+   traditional all-or-nothing UNIX privilege scheme into individual
+   capabilities that can be independently or disabled. Using capabilities
+   allows a program to perform some privileged operations, while preventing it
+   from performing others.
+
+SUMMARY
+
+    The Linux capabilities scheme divides privileged operations into distinct
+    categories, and allows a process to be granted some capabilities, while
+    beginning denied others. This scheme represents an improvement over the
+    traditional all-or-nothing privilege mechanism, whereby a process has
+    either privileges to perform all operations (user ID 0) or no privileges
+    (nonzero user ID). Since kernel 2.6.24, Linux supports attaching
+    capabilities to files, so that a process can gain selected capabilities by
+    execing a program.

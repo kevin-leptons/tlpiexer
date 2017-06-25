@@ -1,0 +1,37 @@
+CHAPTER 52
+POSIX MESSAGE QUEUES
+
+OVERVIEW
+
+    This chapter describes POSIX message queues, which allow processes to
+    exchange data in the form of messages. POSIX message queues are similar to
+    their System V counterparts, in that data is exchanged in units of whole
+    messages. However, there are also some notable differences:
+
+        POSIX message queues are reference counted. A queue that is marked for
+        deletion is removed only after it is closed by all processes that are
+        currently using it.
+
+        Each System V message has an integer type, and messages can be
+        selected in a variety of ways using msgrcv(). By contrast, POSIX
+        messages have an associated priority, and messages are always strictly
+        queued (and thus received) in priority order.
+
+        POSIX message queues provide a feature that allows a process to be
+        asynchronously notified when a message is available on a queue.
+
+    POSIX message queues are a relatively recent addition to Linux. The
+    required implementation support was added in kernel 2.6.6 (in addition,
+    glibc 2.3.4 or later is required).
+
+SUMMARY
+
+    POSIX message queues allow processes to exchange data in the form of
+    messages. Each message has an associated integer priority, and messages
+    are queued (and thus received) in order of priority.
+
+    POSIX message queues have some advantages over System V message queues,
+    notably that they are reference counted and that a process can be
+    asynchronously notified of the arrival of a message on an empty queue.
+    However, POSIX message queues are less portable than System V message
+    queues.

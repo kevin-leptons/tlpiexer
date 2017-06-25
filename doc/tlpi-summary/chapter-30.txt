@@ -1,0 +1,21 @@
+CHAPTER 30
+THREADS: THREAD SYNCHRONIZATION
+
+OVERVIEW
+
+    In this chapter, we describe two tools that threads can use to synchronize
+    their actions: mutexes and condition variables. Mutexes allow threads to
+    synchronize their use of a shared resource, so that, for example, one
+    thread doesn't try to access a shared variable at the same time as another
+    thread is modifying it. Condition variables perform a complementary task:
+    they allow threads to inform each other that a shared variable (or other
+    shared resource) has changed state.
+
+SUMMARY
+
+    The greater sharing provided by threads come at a cost. Threaded
+    applications must employ synchronization primitives such as mutexes and
+    condition variables in order to coordinate access to shared variables. A
+    mutex provides exclusive access to a shared variable. A condition variable
+    allows one or more threads to wait for notification that some other thread
+    has changed has changed the state of a shared variable.

@@ -1,0 +1,57 @@
+CHAPTER 44
+PIPE AND FIFOS
+
+OVERVIEW
+
+    This chapter describes pipes and FIFOs. Pipes are the oldest method of IPC
+    on the UNIX system, having appeared in Third Edition UNIX in the early
+    1970s. Pipes provide an elegant solution to a frequent requirement: having
+    created two processes to run different programs (commands), how can the
+    shell allow the output produced by one process to be used as the input to
+    the other process?. Pipes can be used to pass data between related
+    processes (the meaning of related will become clear later). FIFOs are a
+    variation on the pipe concept. The important difference is that FIFOs can
+    be used for communication between any processes.
+
+SUMMARY
+
+    Pipes were the first method of IPC under the UNIX system, and they are
+    used frequently by the shell, as well as in other applications. A pipe is
+    a unidirectional, limited capacity byte stream that can be used for
+    communication between related processes. Although blocks of data of any
+    size can be written to a pipe, only writes that do not exceed PIPE_BUF
+    bytes are guaranteed to be atomic. As well as being used as a method of
+    IPC, pipes can also be used for process synchronization.
+
+    When using pipes, we must be careful to close unused descriptors in order
+    to ensure that reading processes detect end-of-file and writing processes
+    receive the SIGPIPE signal or EPIPE error (Usually, it is easiest to have
+    the application writing to a pipe ignore SIGPIPE and detect a "broken"
+    pipe via the EPIPE error).
+
+    The popen() and pclose() functions allow a program to transfer data to or
+    from a standard shell command, without needing to handle the details of
+    creating a pipe, execing a shell, and closing unused file descriptors.
+
+    FIFOs operate in exactly the same way as pipes, except that they are
+    created using mkfifo(), have a name in the file system, and can be opened
+    by any process with appropriate permissions. By default, opening a FIFO
+    for reading blocks until another process opens the FIFO for writing, and
+    vice versa.
+
+    In the course of this chapter, we looked at a number of related topics.
+    First, we save how to duplicate file descriptors in such a manner that the
+    standard input or output of a filter can be bound to a pipe. While
+    presenting a client-server example using FIFOs, we touched on a number of
+    topics in client-server design, including the use of a well-known address
+    for a server and interactive versus concurrent server design. In developing
+    the example FIFO application, we noted that, although data transmitted
+    through a pipe is a byte stream, it is sometimes useful for communicating
+    processes to package the data into message, and we looked at various ways
+    in which this could be accomplished.
+
+    Finally, we noted the effect of the O_NONBLOCK (nonblocking I/O) flag when
+    opening and performing I/O on a FIFO. The O_NONBLOCK flag is useful if we
+    don't want to block while opening a FIFO. It is also useful if we don't
+    want reads to block if no data is available, or writes to block if there
+    is insufficient space withing pipe of FIFO.

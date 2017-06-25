@@ -1,0 +1,76 @@
+CHAPTER 11
+SYSTEM LIMITS AND OPTIONS
+
+OVERVIEW
+
+    Each UNIX implementation sets limits on various system features and
+    resources, and provides-or chooses not to provide-options defined in
+    various standards. Examples include the following:
+
+        - How many files can a process hold open at one time?
+        - Does the system support realtime signals?
+        - What is the largest value that can be stored in a variable of type
+          int?
+        - How big an argument list can a program have?
+        - What is the maximum length of a pathname?
+
+    While we could hard-code assumed limits and options into an application,
+    this reduces portability, since limits and options may vary:
+
+        - Across UNIX implementations: Although limits and options may be
+          fixed on an individual implementation, they can vary from one UNIX
+          implementation to another. The maximum value that can be stored in
+          an int is an example of such a limit.
+
+        - At run time on a particular implementation: The kernel may have been
+          reconfigured to change a limit, for example. Alternatively, the
+          application may have been compiled on one system, but run on another
+          with different limits and options
+
+        - From one file system to another: For example, traditional System V
+          file systems allow a filename to be up to 14 bytes, while tradition
+          BSD file systems and most native Linux file systems allow filenames
+          of up to 255 bytes.
+
+    Since system limits and options affect what an application may do, a
+    portable application needs ways of determining limit values and whether
+    options are supported. The C programming language standards and SUSv3
+    provide two principal avenues for an application to obtains such
+    information:
+
+        - Some limits and options can be determined at compile time. For
+          example, the maximum value of an int is determined by the hardware
+          architecture and compiler design choices. Such limits can be
+          recorded in header files.
+
+        - Other limits and options may vary at run time. For such cases, SUSv3
+          defines three functions sysconf(), pathconf(), and fpathconf()
+          that an application can call to check these implementation limits
+          and options.
+
+    SUSv3 specifies a range of limits that a conforming implementation may
+    enforce as well as set of options, each of which may or may not be
+    provided by a particular system. We describe a few of these limits and
+    options in this chapter, and describe others at relevant points in later
+    chapters.
+
+SUMMARY
+
+    SUSv3 specifies limits that an implementation may enforce and system
+    options that an implementation may support.
+
+    Often, it is desirable not to hard-code assumptions about system limits
+    and options into a program, since these may vary across implementations
+    and also on a single implementation, either at run time or across file
+    systems. Therefore, SUSv3 specifies methods by which an implementations
+    can advertise the limits and options it supports. For most limits, SUSv3
+    specifies a minimum value that all implementations must support.
+    Additionally, each implementation can advertise its
+    implementation-specific limits and options at compile time (via a
+    constant definition in <limits.h> or <unistd.h>) and/or run time
+    (via a call to sysconf(), pathconf(), or fpathconf()). These techniques
+    may similarly be used to find out which SUSv3 options an implementation
+    supports. In some case, it may not be possible to determine a particular
+    limit using either of these methods. For such indeterminate limits, we
+    must resort to ad hoc techniques to determine the limit to which an
+    application should adhere.

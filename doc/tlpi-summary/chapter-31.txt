@@ -1,0 +1,37 @@
+CHAPTER 32
+THREAD: THREAD SAFETY AND PER-THREAD STORAGE
+
+OVERVIEW
+
+    This chapter extends the discussion of the POSIX threads API, providing a
+    description of thread-safe functions and one-time initialization. We also
+    discuss how to use thread-specific data or thread-local storage to make an
+    existing function thread-safe without changing the function's interface.
+
+SUMMARY
+
+    A function is said to be thread-safe if it can safely be invoked from
+    multi threads at the same item. The usual reason a function is not
+    thread-safe is that it makes use of global or static variables. One way to
+    render a non-thread-safe function in a multithreaded application is to
+    guard all calls to the function with a mutex lock. This approach suffers
+    the problem that it reduces concurrency, because only on thread can be in
+    the function at any time. An approach that allows greater concurrency is
+    to add mutex locks around just those parts of the function that manipulate
+    shared variables (the critical sections).
+
+    Mutexes can be used to render most functions thread-safe, but they carry a
+    performance penalty because there is a cost to locking and unlocking a
+    mutex. By avoiding the use of global and static variables, a reentrant
+    function achieves thread-safety without the use of mutexes.
+
+    Most of the functions specified in SUSv3 are required to be thread-safe.
+    SUSv3 also lists a small set of functions that are not required to be
+    thread-safe. Typically, these are functions that employ static storage to
+    return information to the caller or to maintain information between
+    successive calls. By definition, such functions are not reentrant, and
+    mutexes can't be used to make them thread-safe. We considered two roughly
+    equivalent coding techniques-thread-specific data and thread-local-storage
+    that can be used to render an unsafe function thread-safe without needing
+    to change its interface. Both of these techniques allow a function to
+    allocate persistent, per-thread storage.

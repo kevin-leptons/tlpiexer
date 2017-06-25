@@ -1,0 +1,35 @@
+CHAPTER 13
+FILE I/O BUFFERING
+
+OVERVIEW
+
+    In the interests of speed and efficiency, I/O system calls (i.e., the
+    kernel) and the I/O functions of the standard C library (i.e., the stdio
+    functions) buffer data when operating on disk files. In this chapter, we
+    describe both both types of buffering and consider how they affect
+    application performance. We also look at various techniques for
+    influencing and disabling both types of buffering, and look at a technique
+    called direct I/O, which is useful for bypassing kernel buffering in
+    certain circumstances.
+
+SUMMARY
+
+    Buffering of input and output data is performed by the kernel, and also by
+    the stdio library. In some cases, we may wish to prevent buffering, but we
+    need to be aware of the impact this has on application performance.
+    Various system call and library functions can be used to control kernel
+    and stdio buffering and to perform one-off buffer flushes.
+
+    A process can use posix_fadvise() to advise the kernel of its likely
+    pattern for accessing data from a specified file. The kernel may use this
+    information to optimize the use of the buffer cache, thus improving I/O
+    performance.
+
+    The Linux-specific open() O_DIRECT flag allows specialized applications to
+    bypass the buffer cache.
+
+    The fileno() and fdopen() functions assist us with the task of mixing
+    system calls and standard C library functions to perform I/O on the same
+    file. Given a stream, fileno() returns the corresponding file descriptor,
+    fdopen() performs the converse operation, creating a new stream that
+    employs a specified open file descriptor.

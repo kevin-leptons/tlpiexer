@@ -1,0 +1,58 @@
+CHAPTER 59
+SOCKETS: INTERNET DOMAINS
+
+OVERVIEW
+
+    Having looked at generic sockets concepts and the TCP/IP protocol suite in
+    previous chapters, we are now ready in this chapter to look at programming
+    with sockets in the IPv4 (AF_INET) and IPv6 (AF_INET6) domain.
+
+    As noted in Chapter 58, Internet domain socket address consist of an IP
+    address and a port number. Although computers use binary representations
+    of IP addresses and port numbers, humans are much better at dealing with
+    names than with numbers. Therefore, we describe the techniques used to
+    identify host computers and ports using names. We also examine the use of
+    library functions to obtain the IP address(es) for a particular hostname
+    and the port number that corresponds to a particular service name. Our
+    discussion of hostnames includes a description of the Domain Name System
+    (DNS), which implements a distributed database that maps hostnames to IP
+    addresses and vice versa.
+
+SUMMARY
+
+    Internet domain sockets allow applications on different hosts to
+    communicate via TPC/IP network. An Internet domain socket address consists
+    of an IP address and a port number, In IPv4, an IP address is a 32-bit
+    number; in IPv6, it is a 128-bit number. Internet domain datagram sockets
+    operate over UDP, providing connectionless, unreliable, message-oriented
+    communication. Internet domain stream sockets operate over TCP, and
+    provide a reliable, bidirectional, byte-stream communication channel
+    between two connected applications.
+
+    Different computer architectures use different conventions for
+    representing data types. For example, integers may be stored in
+    little-endian or big-endian form, and different numbers of bytes to
+    represent numeric types such as int or long. These differences mean that
+    we need to employ some architecture-independent representation when
+    transferring data between heterogeneous machines connected via network. We
+    noted that various marshalling standards exist to deal this problem, and
+    also described a simple solution used by many applications: encoding all
+    transmitted data in text form, with fields delimited by a designated
+    character (usually a newline).
+
+    We looked at a range of functions that can be used to convert between
+    (numeric) string representations of IP address (dotted-decimal for IPv4
+    and hex-string for IPv6) and their binary equivalents. However, it is
+    generally preferable to use host and service names rather than numbers,
+    since names are easier to remember and continue to be usable, even if the
+    corresponding number is changed. We looked at various functions that
+    convert host and service names to their numeric names into socket address
+    is getaddrinfo(), but it is common to see the historical functions
+    gethostbyname() and getservbyname() in existing code.
+
+    Consideration of hostname conversions led us into a discussion of DNS,
+    which implements a distributed database for a hierarchical directory
+    service. The advantage of DNS is that management of the database is not
+    centralized. Instead, local zone administrators update changes for the
+    hierarchical component of the database for which they are responsible, and
+    DNS servers communicate with one another in order to resolve a hostname.

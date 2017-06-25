@@ -1,0 +1,62 @@
+TLPI-EXER
+=========
+
+    Solution for exercises of the Linux Programming Interface book by Michael
+    Kerrisk.
+
+    Kevin Leptons <kevin.leptons@gmail.com> <br>
+    CC by 4.0 License <br>
+    June, 2017
+
+FEATURES
+========
+
+    Documents are related with Linux APIs
+    Solution for exercises
+    Chapters without exercise: 01, 02, 32, 51, 56, 58
+    Skipped chapters: 17, 46, 47, 48, 49, 50, 55, 62, 64
+    Skipped exercises: 07-02, 09-01, 09-02, 10-01, 13-01, 13-02, 15-01, 15-05,
+                       17-01, 18-01, 18-02, 22-04, 24-05, 27-01, 34-05, 43-02,
+                       45-03,
+
+USAGE
+=====
+
+    # prepare sandbox environment to protect your system from wrong operations
+    # you can refer to documents below to setup an sandbox
+    #   - https://en.wikipedia.org/wiki/Sandbox_(computer_security)
+    #   - https://www.virtualbox.org/wiki/Downloads
+    #   - https://docs.docker.com/
+
+    # dependency tools
+    $ apt-get install git gcc gdb cmake
+
+    # source code
+    $ git clone https://github.com/kevin-leptons/tlpi-exer.git
+    $ cd tlpi-exer
+
+    # learning
+    # main document is doc/the-linux-programming-interface.pdf
+    # other documents also in doc/ directory
+
+    # solution for exercise put in src/imp/id.c
+    # for example solution for exercise 59-01 located in src/imp/59-01.c
+
+    # building
+    # executable files put to dest/bin/
+    # library files put into dest/lib/
+    $ ./ctl build
+
+    # or clear
+    $ ./ctl clear
+
+REFERENCES
+==========
+
+    http://man7.org/tlpi/
+    https://en.wikipedia.org/wiki/Sandbox_(computer_security)
+    https://en.wikipedia.org/wiki/XNU)
+    https://en.wikipedia.org/wiki/Architecture_of_Windows_NT
+    https://www.virtualbox.org/wiki/Downloads
+    https://docs.docker.com/
+    https://www2.opengroup.org/ogsys/jsp/publications/mainPage.jsp

@@ -1,0 +1,82 @@
+CHAPTER 56
+SOCKETS: INTRODUCTION
+
+OVERVIEW
+
+    Sockets are a method of IPC that allow data to be exchanged between
+    applications, either on the same host (computer) or on different hosts
+    connected by a network. The first widespread implementation of the sockets
+    API appeared with 4.2BSD in 1983, and this API has been ported to
+    virtually every UNIX implementation, as well as most other operating
+    systems.
+
+    This chapter and the following chapters describe the use of sockets, as
+    follows:
+
+        This chapter provides a general introduction to the sockets API. The
+        following chapters assume an understanding of the general concepts
+        presented here. We don't present any example code this this chapter.
+        Code examples in the UNIX and Internet domains are presented in the
+        following chapters.
+
+        Chapter 57 describes UNIX domain sockets, which allow communication
+        between applications on the same host system.
+
+        Chapter 58 introduces various computer networking concepts and
+        describes key features of the TCP/IP networking protocols. It provides
+        background needed for the next chapters.
+
+        Chapter 59 describes Internet domain sockets, which allow applications
+        on different hosts to communicate via a TCP/IP network.
+
+        Chapter 60 discusses the design of servers that use sockets.
+
+        Chapter 61 covers a range of advanced topics, including additional
+        features for socket I/O, a more detailed look at the TCP protocol, and
+        the use of socket options to retrieve and modify various attributes of
+        sockets.
+
+    These chapters merely aim to give the reader a good grounding in the use
+    of sockets. Sockets programming, especially for network communication, is
+    an enormous topic in its own right, and forms the subject of entire books.
+    Sources of further information are listed in Section 59.15.
+
+SUMMARY
+
+    Sockets allow communication between applications on the same host or on
+    different hosts connected via a network.
+
+    A socket exists within a communication domain, which determines the range
+    of communication and the address format used to identify the socket. SUSv3
+    specifies the UNIX (AF_UNIX), IPv4 (AF_INET), and IPv6 (AF_INET6)
+    communication domains.
+
+    Most applications use one of two socket types: stream or datagram. Stream
+    sockets (SOCK_STREAM) provide a reliable, bidirectional, byte-stream
+    communication channel between two endpoints. Datagram sockets (SOCK_DGRAM)
+    provide unreliable, connectionless, message-oriented communication.
+
+    A typical stream socket server creates its socket using socket(), and then
+    binds the socket to a well-know address using bind(). The server then
+    calls listen() to allow connections to be received on the socket. Each
+    client connection is then accepted on the listening socket using accept(),
+    which returns a file descriptor for a new socket that is connected to the
+    client's socket. A typical stream socket client creates a socket using
+    socket(), and then establishes a connection by calling connect(),
+    specifying the server's well-know address. After two stream sockets are
+    connected, data can be transferred in either direction using read() and
+    write(). Once all processes with a file descriptor referring to a stream
+    socket endpoint have performed an implicit or explicit close(), the
+    connection is terminated.
+
+    A typical datagram socket server creates a socket using socket(), and then
+    binds it to a well-know address using bind(). Because datagram sockets are
+    connectionless, the server's socket can be used to receive datagrams from
+    any client. Datagram can be received using read() or using the
+    socket-specific recvfrom() system call, which returns the address of the
+    sending socket. A datagram socket client creates a socket using socket(),
+    and then use sendto() to send a datagram to a specified (i.e., the
+    server's) address. The connect() system call can be used with a datagram
+    socket to set a peer address for the socket. After doing this, it is no
+    longer necessary to specify the destination address for outgoing
+    datagrams; a write() call can be used to send a datagram.

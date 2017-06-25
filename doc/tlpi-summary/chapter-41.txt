@@ -1,0 +1,47 @@
+CHAPTER 41
+FUNDAMENTALS OF SHARED LIBRARIES
+
+OVERVIEW
+
+    Shared libraries are technique for placing library functions into a single
+    unit that can be shared by multiple processes at run time. This technique
+    can save both disk space and RAM. This chapter covers the fundamentals of
+    shared libraries. The next chapter covers a number of advanced of shared
+    libraries.
+
+SUMMARY
+
+    An object library is an aggregation of compiled object modules that can be
+    employed by programs that are linked against the library. Like other UNIX
+    implementations, Linux provides two types of object libraries: static
+    libraries, which were the only type of library available under early UNIX
+    systems, and the more modern shared libraries.
+
+    Because they provide several advantages over static libraries, shared
+    libraries are the predominant type of library in use on contemporary UNIX
+    systems. The advantages of shared libraries spring primarily from the fact
+    that when a program are not included in the resulting executable. Instead,
+    the (static) linker merely includes information in the executable file
+    about the shared libraries that are required at run time. When the file is
+    executed, the dynamic linker uses this information to load the required
+    shared libraries. At run time, all programs using the same shared library
+    share a single copy of that library in memory. Since shared libraries are
+    not copied into executable files, and a single memory-resident copy of the
+    shared library is employed by all programs at run time, shared libraries
+    reduce the amount of disk space and memory required by the system.
+
+    The shared library soname provides a level of indirection in resolving
+    shared library references at run time. If a shared library has a soname,
+    then this name, rather than the library's real name, is recorded in the
+    resulting executable produced by th static linker. A versioning scheme,
+    whereby a shared library is given a real name of from
+    libname.so.major-id.minor-id, while the soname has the form
+    libname.so.major-id, allows for the creation of programs that
+    automatically employ the latest minor version of the shared library
+    (without requiring the programs to be relinked), while also allowing for
+    the creation of new, incompatible major versions of the library.
+
+    In order to find a shared library at run time, the dynamic linker follows
+    a standard set of search rules, which include searching a set of
+    directories (e.g., /lib and /usr/lib) in which most shared libraries are
+    installed.

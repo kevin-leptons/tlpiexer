@@ -1,0 +1,83 @@
+CHAPTER 34
+PROCESS GROUPS, SESSIONS, AND JOB CONTROL
+
+OVERVIEW
+
+    Process groups and sessions form a two-level hierarchical relationship
+    between processes; a process group is a collection of related processes,
+    and a session is a collection of related process groups. The meaning of
+    the term related in each case will become clear in the course of this
+    chapter.
+
+    Process groups and sessions are abstractions defined to support shell job
+    control, which allows interactive users to run commands in the foreground
+    or in the background. The term job is often used synonymously with the
+    term process group.
+
+    This chapter describes process groups, sessions, and job control.
+
+SUMMARY
+
+    Sessions and process groups (also known as jobs) form a two-level
+    hierarchy of processes: a session ais a collection of process groups,
+    and a process group is a collection of processes. A session leader is the
+    process that created the session using setsid(). Similarly, a process
+    group leader is the process that created the group using setpgid().
+    All of the members of a process group share the same process group ID
+    (which is the same as the process group ID of the process group leader).
+    Each session may have a controlling terminal (/dev/tty), which is
+    established when the session leader opens a terminal device. Opening the
+    controlling terminal also causes the session leader to become the
+    controlling process for the terminal.
+
+    Sessions and process groups were defined to support shell job control
+    (although occasionally they find other uses in applications). Under job
+    control, the shell is the session leader and controlling process for the
+    terminal on which it is running. Each job (a simple command or pipeline)
+    executed by the shell is created as a separate process group, and the
+    shell provides commands to move a job between three states: running in the
+    foreground, running in the background, and stopped in the background.
+
+    To support job control, the terminal driver maintains a record of the
+    foreground process group (job) for the controlling terminal. The terminal
+    driver delivers job-control signals to the foreground job when certain
+    characters are typed. These signals either terminate or stop the
+    foreground job.
+
+    The notion of the terminal's foreground job is also used to arbitrate
+    terminal I/O requests. Only processes in the foreground job may read from
+    the controlling terminal. Background jobs are prevented from reading
+    delivery of the SIGTTIN signal, whose default action is to stop the job.
+    If terminal TOSTOP is set, then background jobs are also prevented from
+    writing to the controlling terminal by delivery of a SIGTTOU signal, whose
+    default action is to stop the job.
+
+    When a terminal disconnect occurs, the kernel delivers a SIGUP signal to
+    the controlling process to inform it of the fact. Such an event may result
+    in a chain reaction whereby a SIGHUP signal is delivered to many other
+    process. First, if the controlling process is a shell (as is typically the
+    case), then, before terminating, the shell sends SIGHUP to each of the
+    process groups it has created. Second, if delivery of SIGHUP resuls in
+    termination of a controlling process, then the kernel also sends SIGHUP to
+    all of the members of the foreground process group of the controlling
+    terminal.
+
+    In general, applications don't need to be cognizant of job-control
+    signals. One exception is when a program performs screen-handling
+    operations. Such programs need to correctly handle the SIGTSTP signal,
+    resetting terminal attributes to same values before the process is
+    suspended, and restoring the correct (application-specific) terminal
+    attributes when the application is once more resumed following delivery of
+    a SIGCONT signal.
+
+    A process group is considered to be orphaned if none of its member
+    processes has a parent in a different process in the same session.
+    Orphaned process groups are significant because there is no process
+    outside the group that can both monitor the state of any stopped processes
+    within the group and is always allowed to send a SIGCONT signal to these
+    stopped processes in order to restart them. This could result in such
+    stopped processes languishing forever on the system. To avoid this
+    possibility, when a process group with stopped member processes becomes
+    orphaned, all members of the process group are sent a SIGHUP signal,
+    followed by SIGCONT signal, to notify them that they have become orphaned
+    and ensure that they are restarted.

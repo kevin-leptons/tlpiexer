@@ -1,0 +1,30 @@
+CHAPTER 28
+PROCESS CREATION AND PROGRAM EXECUTION IN MORE DETAIL
+
+OVERVIEW
+
+    This chapter extends the material presented in Chapter 24 to 27 by
+    covering a variety of topics related to process creation and program
+    execution. We describe process accounting, a kernel feature that writes an
+    accounting recored for each process on the system as it terminates. We
+    then look at the Linux-specific clone() system call, which is the
+    low-level API that is used to create threads on Linux. We follow this with
+    some comparisons of the performance of fork(), vfork(), and clone(). We
+    conclude with a summary of the effects of fork() and exec() on the
+    attributes of a process.
+
+SUMMARY
+
+    When process accounting is enabled, the kernel writes an accounting
+    recored to a file for each process that terminates on the system. This
+    record contains statistics on the resources used by the process.
+
+    Like fork(), the Linux-specific clone() system call creates a new process,
+    but allows finer control over which attributes are shared between the
+    parent and child. This system call is used primarily for implementing
+    threading libraries.
+
+    We compared the speed of process creation using fork(), vfork(), and
+    clone(). Although vfork() is faster than fork(), the time difference
+    between these system calls is small by comparison with the time required
+    for a child process to do a subsequent exec().

@@ -1,0 +1,30 @@
+CHAPTER 19
+MONITORING FILE EVENTS
+
+OVERVIEW
+
+    Some applications needs to be able to monitor files or directories in
+    order to determine whether events have occurred for the monitored objects.
+    For example, a graphical file manager needs to be able to determine when
+    files are added or removed from the directory that is currently being
+    displayed, or a daemon may want to monitor its configuration file in order
+    to know if the file has been changed.
+
+    Starting with kernel 2.6.13, Linux provides the inotify mechanism, which
+    allows an application to monitor file events. This chapter describes the
+    use of inotify.
+
+    The inotify mechanism replaces an older mechanism, dnotify, which provided
+    a subset of the functionality of inotify. We describe dnotify briefly at
+    the end of this chapter, focusing on why inotify is better.
+
+    The inotify and dnotify mechanisms are Linux-specific (A few other systems
+    provide similar mechanisms. For example, the BSDs provide the kqueue
+    APIs).
+
+SUMMARY
+
+    The Linux-specific inotify mechanism allows an application to obtain
+    notifications when events (file are opened, closed, created, deleted,
+    modified, renamed, and so on) occur for a set of monitored files and
+    directories. The inotify mechanism supersedes the older dnotify mechanism.

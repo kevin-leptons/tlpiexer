@@ -1,0 +1,31 @@
+CHAPTER 27
+PROGRAM EXECUTION
+
+OVERVIEW
+
+    This chapter follows from our discussion of process creation and
+    termination in the previous chapters. We now look at how a process can use
+    the execve() system call to replace the program that it is running by a
+    completely new program. We then show how to implement the system()
+    function, which allows its caller to execute an arbitrary shell command.
+
+SUMMARY
+
+    Using execve(), a process can replace the program that it is currently
+    running by a new program. Arguments to the execve() all allow the
+    specification of the argument list (argv) and environment list for the new
+    program. Various similarly named library functions are layered on top of
+    execve() and provide different interfaces to the same functionality.
+
+    All of the exec() functions can be used to load a binary executable file
+    or to execute an interpreter script. When a process execs a script, the
+    script's interpreter program replaces the program currently being
+    executed by the process. The script's interpreter is normally identified
+    by and initial line (starting with the character #!) in the script that
+    specifies the pathname of the interpreter. If no such line is present,
+    then the script is executable only via execlp() or execvp(), and these
+    functions exec the shell as the script interpreter.
+
+    We showed how fork(), exec(), exit(), and wait() can be combined to
+    implement the system() function, which can be used an arbitrary shell
+    command.

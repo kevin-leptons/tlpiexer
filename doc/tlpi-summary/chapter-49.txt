@@ -1,0 +1,64 @@
+CHAPTER 49
+MEMORY MAPPINGS
+
+OVERVIEW
+
+    This chapter discusses the use of the mmap() system call to create memory
+    mappings. Memory mappings can be used for IPC, as well as a range of other
+    purposes. We begin with an overview of some fundamental concepts before
+    considering mmap() in depth.
+
+SUMMARY
+
+    The mmap() system call creates a new memory mapping in the calling
+    process's virtual address space. The munmap() system call performs the
+    converse operation, removing a mapping from process's address space.
+
+    A mapping may be of two types: file-based or anonymous. A file mapping
+    maps the contents of a file region into the process's virtual address
+    space. An anonymous mapping (created by using the MAP_ANONYMOUS flag or
+    by mapping /dev/zero) doesn't have a corresponding file region; the bytes
+    of the mapping are initialized to 0.
+
+    Mappings can be either private (MAP_PRIVATE) or shared (MAP_SHARED). This
+    distinction determines the visibility of changes made to the shared
+    memory, and, in the case of file mappings, determines whether the kernel
+    propagates changes to the contents of the mapping to the underlying file.
+    When a process maps a file with the MAP_PRIVATE flag, any changes it
+    makes to the contents of the mapping are not visible to other processes
+    and are not carried through to the mapped file. A MAP_SHARED file mapping
+    is the converse changes to the mapping are visible to other processes and
+    are carried through to the mapped file.
+
+    Although the kernel automatically propagates changes to the contents of a
+    MAP_SHARED mapping to the underlying file, it doesn't provide any
+    guarantees about when this is done. An application can use the msync()
+    system call to explicitly control when the contents of a mapping are
+    synchronized with the mapped file.
+
+    Memory mapping serve a variety of uses, including:
+
+        - allocating process-private memory (private anonymous mappings);
+        - initializing the contents of the text and initialized data segments
+          of a process (private file mappings);
+        - sharing memory between processes related via fork() (shared
+          anonymous mappings);
+        - performing memory-mapped I/O, optionally combined with memory
+          sharing between unrelated processes (shared file mappings)
+
+    Two signals may come into play when accessing the contents of a mapping.
+    SIGSEGV is generated if we attempt access in a manner that violates the
+    protections on the mapping (or if we access any currently unmapped
+    address). SIGBUS is generated for file-based mappings if we access a part
+    of the mapping for which no corresponding region exists in the file (i.e.,
+    mapping is larger than the underlying file).
+
+    Swap space overcommitting allows the system to allocate more memory to
+    processes than is actually available in RAM and swap space. Overcommitting
+    is possible because, typically, each process does not make full use of its
+    allocation. Overcommitting can be controlled on a per-mmap() basis using
+    the MAP_NORESERVE flag, and on a system-wide basis using /proc files.
+
+    The mremap() system call allows an existing mapping to be resized. The
+    remap_file_pages() system call allows the creation of nonlinear file
+    mappings.

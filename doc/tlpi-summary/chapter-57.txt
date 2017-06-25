@@ -1,0 +1,29 @@
+CHAPTER 57
+SOCKETS: UNIX DOMAIN
+
+OVERVIEW
+
+    This chapter looks at the use of UNIX domain sockets, which allow
+    communication between processes on the same host system. We discuss the
+    use of both stream and datagram sockets in the UNIX domain. We also
+    describe the use of file permissions to control access to UNIX domain
+    sockets, the use of socketpair() to create a pair of connect UNIX domain
+    sockets, and the Linux abstract socket namespace.
+
+SUMMARY
+
+    UNIX domain sockets allow communication between application on the same
+    host. The UNIX domain supports both stream and datagram sockets.
+
+    A UNIX domain socket is identified by a pathname in the file system. File
+    permissions can be used to control access to a UNIX domain socket.
+
+    The socketpair() system call creates a pair of connected UNIX domain
+    sockets. This avoids the need for multiple system calls to create, bind,
+    and connect the sockets. A socket pair is normally used in a similar
+    fashion to a pipe: one process creates the socket pair and then forks to
+    create a child that inherits descriptors referring to the sockets. The two
+    processes can then communicate via the socket pair.
+
+    The Linux-specific abstract socket namespace allows us to bind a UNIX
+    domain socket to a name that doesn't appear in the file system.

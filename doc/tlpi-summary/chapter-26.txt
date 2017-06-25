@@ -1,0 +1,37 @@
+CHAPTER 26
+MONITORING CHILD PROCESSES
+
+OVERVIEW
+
+    In many application designs, a parent process needs to know when one of
+    its child processes change state - when the child terminates or is stopped
+    by a signal. This chapter describes two techniques used to monitor child
+    processes: the wait() system call (and its variants) and the use of the
+    SIGCHLD signal.
+
+SUMMARY
+
+    Using wait() and waitpid() (and other related functions), a parent process
+    can obtain the status of its terminated and stopped children. This status
+    indicates whether a child process terminated normally (with an exit status
+    indicating either success or failure), terminated abnormally, was stopped
+    by a signal, or was resumed by a SIGCONT signal.
+
+    If a child's parent terminates, the child becomes an orphan and is adopted
+    by the init process, whose process ID is 1.
+
+    When a child process terminates, it become a zombie, and is removed from
+    system only when its parent calls wait() (or similar) to retrieve the
+    child's status. Long-running programs such as shells and daemons should be
+    designed so that they always reap the status the status of the child
+    processes they create, since a process in the zombie state can't be
+    killed, and unreaped zombies will eventually clog the kernel process
+    table.
+
+    A common way of reaping dead child processes is to establish a handler for
+    the SIGCHLD signal. This signal is delivered to a parent process whenever
+    one of its children terminates, and optionally when a child is stopped by
+    a signal. Alternatively, but somewhat less portably, a process may elect
+    to set the disposition of SIGCHLD to SIG_IGN, in which case the status of
+    terminated children is immediately discarded (and thus can't later be
+    retrieved by the parent), and the child don't become zombies.

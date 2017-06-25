@@ -1,0 +1,16 @@
+CHAPTER 02
+FUNDAMENTAL CONCEPTS
+
+OVERVIEW
+
+    This chapter introduces a range of concepts related to Linux system
+    programming. It is intended for readers who have worked primarily with
+    other operating systems, or who have only limited experience with Linux or
+    another UNIX implementation.
+
+SUMMARY
+
+    In this chapter, we surveyed a range of fundamental concepts related to
+    Linux system programming. An understanding of these concepts should
+    provide readers with limited experience on Linux of UNIX with enough
+    background to begin learning system programming.

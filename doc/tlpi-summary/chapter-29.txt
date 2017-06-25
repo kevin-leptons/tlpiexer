@@ -1,0 +1,44 @@
+CHAPTER 29
+THREAD: INTRODUCTION
+
+OVERVIEW
+
+    In this and the next few chapters, we describe POSIX threads, often know
+    as Pthreads. We won't attempt to cover the entire Pthreads API, since it
+    is rather large. Various sources of further information about threads are
+    listed at the end of this chapter.
+
+    These chapters mainly describe the standard behavior specified for the
+    Pthreads API. In Section 33.5, We discuss those points where the two main
+    Linux threading implementations - LinuxThread and Native POSIX Threads
+    Library (NPTL) - deviate from the standard.
+
+    In this chapter, we provide an overview of the operation of threads, and
+    then look at how threads are created and how they terminate. We conclude
+    with a discussion of some factors that may influence the choice of a
+    multithreaded approach versus a multiprocess approach when designing an
+    application.
+
+SUMMARY
+
+    In a multithreaded process, multiple threads are concurrently executing
+    the same program. All of the threads share the same global and heap
+    variables, but each thread has private stack for local variables. The
+    threads in a process also share a number of other attributes, including
+    process ID, open file descriptors, signal dispositions, current working
+    directory, and resource limits.
+
+    The key difference between threads and processes is the easier sharing of
+    information that threads provide, and this is the main reason that some
+    application design map better onto a multithread design than onto a
+    multiprocess design. Threads can also provide better performance for some
+    oeprations (e.g., thread creation is faster than process creation), but
+    this factor is usually secondary in influencing the choice of threads
+    versus processes.
+
+    Threads are created using pthread_create(). Each thread can then
+    independently terminate using pthread_exit() (If any thread calls exit(),
+    then all threads immediately terminate). Unless a thread has been marked
+    as detached (e.g., via a call to pthread_detach()), it must be joined by
+    another thread using pthread_join(), which returns the termination status
+    of the joined thread.

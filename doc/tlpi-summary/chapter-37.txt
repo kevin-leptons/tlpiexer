@@ -1,0 +1,30 @@
+CHAPTER 37
+DAEMONS
+
+OVERVIEW
+
+    This chapter examines the characteristics of daemon processes and looks
+    at the steps required to turn a process into a daemon. We also look at how
+    to log messages from a daemon using the syslog facility.
+
+SUMMARY
+
+    A daemon is a long-lived process that has no controlling terminal (i.e.,
+    it runs in the background). Daemons perform specific tasks, such as
+    providing a network login facility or serving web pages. To become a
+    daemon, a program performs a standard sequence of steps, including call to
+    fork() and setsid().
+
+    Where appropriate, daemons should correctly handle the arrival of the
+    SIGTERM and SIGHUP signals. Then SIGTERM signal should result in an
+    orderly shutdown of the daemon, while he SIGHUP signal provides a way to
+    trigger the daemon to reinitialize itself by rereading its configuration
+    file and reopening any log files it may be using.
+
+    The syslog facility provides a convenient way for daemons (and other
+    applications) to log error and other messages to a central location.
+    These messages are processed by the syslogd daemon, which redistributes
+    the messages according to the dictates of the syslogd.conf configuration
+    file. Messages may be redistributed to a number of targets, including
+    terminals, disk files, logged-in users, and via TCP/IP network, to other
+    process on remote hosts (typically other syslogd daemons).

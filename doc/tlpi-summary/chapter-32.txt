@@ -1,0 +1,40 @@
+CHAPTER 32
+THREADS: THREAD CANCELLATION
+
+OVERVIEW
+
+    Typically, multiple threads execute in parallel, with each thread
+    performing its task until it decides to terminate by calling
+    pthread_exit() or returning from the thread's start function.
+
+    Sometimes, it can be useful to cancel a thread; that is, to send it a
+    request asking it to terminate now. This could be useful, for example, if
+    a group of threads is performing a calculation, and one thread detects an
+    error condition that requires the other threads to terminate.
+    Alternatively, a GUI-driven application may provide a cancel button to
+    allow the user to terminate a task that is being performed by a thread in
+    the background; in this case, the main thread (controlling the GUI) needs
+    to tell the background thread to terminate.
+
+    In this chapter, we describe the POSIX threads cancellation mechanism.
+
+SUMMARY
+
+    The pthread_cancel() function allows one thread to send another thread a
+    cancellation request, which is a request that the target thread should
+    terminate.
+
+    How the target thread reacts to this request is determined by its
+    cancellability state and type. If the cancelability state is currently set
+    to disabled, the request will remain pending until the cancelability state
+    is set to enabled. If cancelability is enabled, the cancelability type
+    determines when the target thread reacts to the request. If the type is
+    deferred, the cancellation occurs when the thread next calls one of a
+    number of functions specifies as cancellation points by SUSv3. If the type
+    is asynchronous, cancellation may occur at any time (this is rarely
+    useful).
+
+    A thread can establish a stack of cleanup handlers, which are
+    programmer-defined functions that are invoked automatically to perform
+    cleanups (e.g., restoring the states of shared variables, or unblocking
+    mutexes) if the thread is canceled.

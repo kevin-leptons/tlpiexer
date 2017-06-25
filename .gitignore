@@ -1,0 +1,12 @@
+dest/
+tmp/
+build/
+cmake-build-debug/
+__pycache__/
+.idea/
+*.swp
+*.swo
+*.o
+.ycm_extra_conf.py
+.ycm_extra_conf.pyc
+core

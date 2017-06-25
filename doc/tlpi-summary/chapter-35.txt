@@ -1,0 +1,41 @@
+CHAPTER 35
+PROCESS PRIORITIES AND SCHEDULING
+
+OVERVIEW
+
+    This chapter discusses various system calls and process attributes that
+    determine when and which processes obtains access to the CPU(s). We begin
+    by describing the nice value, a process characteristic that influences the
+    amount of CPU time that a process is allocated by the kernel scheduler. We
+    follow this with a description of the POSIX realtime scheduling API. This
+    API allows us to define the policy and priority used for scheduling
+    processes, giving us much tighter control over how processes are allocated
+    to the CPU. We conclude with a discussion of the system calls for setting
+    a process's CPU affinity mask, which determines the ste of CPUs on which a
+    process running on a multiprocessor system will run.
+
+SUMMARY
+
+    The default kernel scheduling algorithm employs a round-robin time-sharing
+    policy. By default, all processes have equal access to the CPU under this
+    policy, but we can set a process's nice value to a number in the range -20
+    (high priority) to +19 (low priority) to cause the scheduler to favor or
+    disfavor that process. However, even if we give a process the lowest
+    priority, it is not completely starved of the CPU.
+
+    Linux also implements the POSIX realtime scheduling extensions. These
+    allow an application to precisely control the allocation of the CPU to
+    process. Processes operating under the two realtime scheduling policies,
+    SHCED_RR (round-robin) and SCHED_FIFO (first-in, first-out), always have
+    priority over processes operating under nonrealtime policies. Realtime
+    processes have priorities in the range 1 (low) to 99 (high). As long as it
+    is runnable, a higher-priority process completely excludes lower-priority
+    processes from the CPU. A operating under the SCHED_FIFO policy maintains
+    exclusive access to the CPU until either it terminates, it voluntarily
+    runnable. Similar rules apply to SHED_RR policy, with the addition that if
+    multiple processes are running at the same priority, then the CPU is
+    shared among these processes in a round-robin fashion.
+
+    A processes's CPU affinity mask can be used to restrict the process to
+    running on a subset of the CPUs available on a multiprocessor system. This
+    can improve the performance of certain types of applications.

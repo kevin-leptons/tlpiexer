@@ -1,0 +1,20 @@
+CHAPTER 07
+MEMORY ALLOCATION
+
+OVERVIEW
+
+    Many system programs need to be able to allocate extra memory for dynamic
+    data structures (e.g., linked lists and binary trees), whose size depends
+    on information that is available only at run time. This chapter describes
+    the functions that are used to allocated memory on the heap or the stack.
+
+SUMMARY
+
+    Using the malloc family of functions, a process can dynamically allocate
+    and release memory on the heap. In considering implementation of these
+    functions, we saw that various things can go wrong in a program that
+    mishandles the blocks of allocated memory, and we noted that a number of
+    debugging tools are available to help locate the source of such errors.
+
+    The alloca() function allocates memory on the stack. This memory is
+    automatically deallocated when the function that call alloca() returns.

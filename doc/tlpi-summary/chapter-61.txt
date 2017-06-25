@@ -1,0 +1,85 @@
+CHAPTER 61
+SOCKETS: ADVANCED TOPICS
+
+OVERVIEW
+
+    This chapter considers a range of more advanced topics relating to sockets
+    programming, including the following:
+
+        the circumstances in which partial reads and writes can occur on
+        stream sockets;
+
+        the use of shutdown() to close on half of th bidirectional channel
+        between two connected sockets;
+
+        the recv() and send() I/O system calls, which provide socket-specific
+        functionality not available with read() and write();
+
+        the sendfile() system call, which is used in certain circumstances to
+        efficiently output data on a socket;
+
+        details of the operation of the TCP protocol, with the aim of
+        eliminating some common misunderstandings that lead to mistakes when
+        writing programs that use TCP sockets;
+
+        the use of the netstat and tcpdump commands for monitoring and
+        debugging applications that use sockets;
+
+        the use of the getsockopt() and setsockopt() system calls to retrieve
+        and modify options affecting the operating of a socket.
+
+    We also consider a number of other more minor topics, and conclude the
+    chapter with summary of some advanced sockets features.
+
+SUMMARY
+
+    In various circumstances, partial reads and writes can occur when
+    performing I/O on stream sockets. We showed the implementation of two
+    functions, readn() and writen(), that can be used to ensure a complete
+    buffer of data is read or written.
+
+    The shutdown() system call provides more precise control over connection
+    termination. Using shutdown(), we can forcibly shut down either or both
+    halves of a bidirectional communication stream, regardless of whether
+    there are other open file descriptors referring to the socket.
+
+    Like read() and write(), recv() and send() can be used to perform I/O on a
+    socket, but calls provide an extra argument, flags, that controls
+    socket-specific I/O functionality.
+
+    The sendfile() system allows us to efficiently copy the contents of a file
+    to a socket. This efficiency is gained because we don't need to copy file
+    data to and from user memory, as would be required with call to read() and
+    write().
+
+    The getsockname() and getpeername() system calls retrieve, respectively,
+    the local address to which a socket is bound and the address of the peer
+    to which that socket is connected.
+
+    We considered some details of the operation of TCP, including TCP states
+    and the TCP state transmission diagram, and TCP connection establishment
+    and termination. As part of this discussion, we saw why the TIME_WAIT
+    state is an important part of TCP's reliability guarantee. Although this
+    stat can lead to the "Address already in use" error when restarting a
+    server, we later saw that the SO_REUSEADDR socket option can be used to
+    avoid this error, while nevertheless allowing the TIME_WATI state to serve
+    its intended purpose.
+
+    The netstat and tcpdump commands are useful tools for monitoring and
+    debugging applications that use sockets.
+
+    The getsockopt() and setsockopt() system calls retrieve and modify options
+    affecting the operation of a socket.
+
+    On Linux, when a new socket is created by accept(), it does not inherit
+    the listening sockets open file status flags, file descriptor flags, or
+    file descriptor attributes related to signal-driven I/O. However, it does
+    inherit the setting of socket options. We noted that SUSv3 is silent on
+    these details, which vary across implementations.
+
+    Although UDP doesn't provide the reliability guarantees of TCP, we saw
+    that there are nevertheless reasons why UDP can be preferable for some
+    applications.
+
+    Finally, we outlined a few advanced features of sockets programming that
+    we don't describe in detail in this book.

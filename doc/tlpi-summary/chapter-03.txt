@@ -1,0 +1,54 @@
+CHAPTER 03
+SYSTEM PROGRAMMING CONCEPTS
+
+OVERVIEW
+
+    This chapter covers various topics that are prerequisites for system
+    programming. We begin by introducing system calls and detailing the steps
+    occur during their execution. We then consider library functions and how
+    they differ from system calls, and couple this with description of the
+    (GNU) C library.
+
+    Whenever we make a system call or call a library function, we should
+    always check the return status of the call in order to determine if it was
+    successful. We describe how to perform suck checks, and present a set of
+    functions that are used in most of the example programs in this book to
+    diagnose errors from system calls and library functions.
+
+    We conclude by looking at various issues related to portable programming,
+    specifically the use of feature test macros and the standard system data
+    types defined by SUSv3.
+
+SUMMARY
+
+    System calls allow processes to request services from the kernel. Even the
+    simplest system calls have a significant overhead by comparison with a
+    user-space function call, since the system must temporarily switch to
+    kernel mode to execute the system call, and the kernel must verify system
+    call arguments and transfer data between user memory and kernel memory.
+
+    The standard C library provides a multitude of library functions that
+    perform a wide range of tasks. Some library functions employ system calls
+    to do their work; others perform tasks entirely within user space. On
+    Linux, the usual standard C library implementation that is used is glibc.
+
+    Most system calls and library functions return a status indicating whether
+    a call has succeeded or failed. Such status returns should always be
+    checked.
+
+    We introduced a number of functions that we have implemented for use in
+    the example programs in this book. The tasks performed by these functions
+    include diagnosing errors and parsing command-line arguments.
+
+    We discussed various guidelines and techniques that can help us write
+    portable system programs that run on any standards-conformant system.
+
+    When compiling an application, we can define various feature test macro
+    that control the definitions exposed by header files. This is useful if we
+    want to ensure that a program conforms to some formal or
+    implementation-defined standard(s).
+
+    We can improve the portability of system programs by using the system data
+    types defined in various standards, rather than native C types. SUSv3
+    specifies a wide range of system data types that an implementation should
+    support and that an application should employ.

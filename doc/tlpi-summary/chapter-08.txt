@@ -1,0 +1,41 @@
+CHAPTER 08
+USERS AND GROUPS
+
+SUMMARY
+
+    Every user has a unique login name and an associated numeric user
+    identifier (UID). Users can belong to one or more groups. Each group also
+    has a unique name and group identifier (GID).
+
+    The primary purpose of user and group IDs is to determine ownership of
+    various system resources and to control the permissions granted to
+    processes accessing those resources. For example, each file belongs to a
+    particular user and group, and each process has a number of user and group
+    IDs that determine who owns the process and what permissions it has when
+    accessing a file (see Chapter 9 for details).
+
+    In this chapter, we look at the system files that are used to define the
+    users and groups on the system, and then describe the library functions
+    used to retrieve information form these files. We conclude with a
+    discussion of the crypt() function, which is used to encrypt and
+    authenticate login passwords.
+
+SUMMARY
+
+    Each user has a unique login name and an associated numeric user ID.
+    Users can belong to one or more groups, each of which also has a unique
+    name and an associated numeric identifier. The primary purpose of these
+    identifiers is to establish ownership of various system resources (e.g.,
+    files) and permissions for accessing them.
+
+    A user's name and ID are defined in the /etc/passwd file, which also
+    contains other information about the user. A user's group memberships are
+    defined by fields in the /etc/passwd and /etc/group files. A further file,
+    /etc/shadow, which can be read only by privileged processes, is used to
+    separate the sensitive password information from the publicly available
+    user information in /etc/passwd. Various library functions are provided
+    for retrieving information from each of these files.
+
+    The crypt() function encrypts a password in the same manner as the
+    standard login program, which is useful for programs that need to
+    authenticate users.

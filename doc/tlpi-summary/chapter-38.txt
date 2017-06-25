@@ -1,0 +1,40 @@
+CHAPTER 38
+WRITING SECURE PRIVILEGED PROGRAMS
+
+OVERVIEW
+
+    Privileged programs have access to features and resources (files, devices,
+    and so on) that are not available to ordinary users. A program can run with
+    privileges by two general means:
+
+        - The program was started under a privileged user ID. Many daemons and
+          network servers, which are typically run as root, fall into this
+          category.
+
+        - The program has its set-user-ID or set-group-ID permission bit set.
+          When a set-user-ID (set-group-ID) program is execed, it change the
+          effective user (group) ID of the process to be the same as the owner
+          (group) of the program file (We first described set-user-ID) and
+          set-group-ID programs in Section 9.3). In this chapter, we'll
+          sometimes use the term set-user-ID-root to distinguish a set-user-ID
+          program that gives superuser privileges to a process from one that
+          gives a process another effective identity.
+
+    If a privileged program contains bugs, or can be subverted by a malicious
+    user, then the security of the system or an application can be
+    compromised. From a security viewpoint, we should write programs so as to
+    minimize both the chance of a compromise and the damage that can be done
+    if a compromise does occur. These topics form the subject of this chapter,
+    which provides a set of recommended practices for secure programming, and
+    describes various pitfalls that should be avoided when writing privileged
+    programs.
+
+SUMMARY
+
+    Privileged programs have access to system resources that are not available
+    to ordinary users. If such programs can be subverted, then the security of
+    the system can be compromised. In this chapter, we presented a set of
+    guidelines for writing privileged programs. The aim of these guidelines is
+    twofold: to minimize the chances of a privileged program being subverted,
+    and to minimize the damage that can be done in the event that a privileged
+    program is subverted.

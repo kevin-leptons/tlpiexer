@@ -1,0 +1,76 @@
+CHAPTER-22
+SIGNAL: ADVANCED FEATURES
+
+OVERVIEW
+
+    This chapter completes the discussion of signals that we began in Chapter
+    20, covering a number of more advanced topics, including the following:
+
+        - core dump files;
+        - special cases regarding signal delivery, disposition, ad handling;
+        - synchronous and asynchronous generation of signals;
+        - when and in what order signals are delivered;
+        - interruption of system calls by signal handlers, and how to
+          automatically restart interrupted system calls;
+        - realtime signals;
+        - the use of sigsuspend() to set the process signal mask and wait for
+          a signal to arrive;
+        - the use of sigwaitinfo() (and sigtimedwait()) to synchronously wait
+          for a signal to arrive;
+        - the use of signalfd() to receive a signal via file descriptor;
+        - the order BSD and System V signal APIs
+
+SUMMARY
+
+    Certain signals cause a process to create a core dump and terminate. This
+    file contains information that can be used by a debugger to inspect the
+    state of a process at the time that it terminated. By default, a core dump
+    file is named core, but Linux provides the /proc/sys/kernel/core_pattern
+    file to control the naming of core dump files.
+
+    A signal may be generated asynchronously. Asynchronous generation occurs
+    when a signal is sent a process by the kernel or by another process. A
+    process can't predict precisely when an synchronously generated signal
+    will be delivered (We noted that asynchronous signals are normally
+    delivered the next time the receiving process switches from kernel mode to
+    user mode). Synchronous generation occurs when the process itself executes
+    code that directly generates the signal - for example, by executing an
+    instruction that causes a hardware exception or by calling raise(). The
+    delivery of a synchronously generated signal is precisely predictable (it
+    occurs immediately).
+
+    Realtime signals are a POSIX addition to the original signal model, and
+    differ from standard signals in that they are queued, have a specified
+    delivery order, and can be sent with an accompanying piece of data.
+    Realtime signals are designed to be used for application-defined purposes.
+    A realtime signal is sent using the sigqueue() system call, and an
+    additional argument (the siginfo_t structure) is supplied to the signal
+    handler so that it can obtain the data accompanying the signal, as well as
+    the process ID and real user ID to the sending process.
+
+    The sigsuspend() system call allows a program to atomically modify the
+    process signal mask and suspend execution until a signal arrives. The
+    atomicity of sigsuspend() is essential to avoid race conditions when
+    unblocking a signal and then suspending execution until that signal
+    arrives.
+
+    Like sigwaitinfo() and sigtimedwait(), the Linux-specific signalfd()
+    system can be used to synchronously wait for a signal. The distinctive
+    feature of this interface is that signal can be read via a file
+    descriptor. This file descriptor can also be monitored using select(),
+    poll(), and epoll().
+
+    Although signals can be viewed as a method of IPC, many factors make them
+    generally unsuitable for this purpose, including their asynchronous
+    nature, the fact that they are not queued, and their low bandwidth. More
+    usually, signals are use as a method of process synchronization and for a
+    variety of other purpose (e.g., event notification, job control, and timer
+    expiration).
+
+    Although the fundamental signal concepts are straightforward, our
+    discussion has stretched over three chapters, since there were many
+    details to cover. Signals play an important role in various parts of the
+    system call API, and we'll revisit their use in several later chapters.
+    In addition, various signal-related functions are specific to threads
+    (e.g., pthread_kill() and pthread_sigmask()), and we defer discussion
+    of these functions until Section 33.2.

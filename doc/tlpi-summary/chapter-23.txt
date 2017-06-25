@@ -1,0 +1,41 @@
+CHAPTER 23
+TIMER AND SLEEPING
+
+OVERVIEW
+
+    A timer allows a process to schedule a notification for itself to occur at
+    some time in the future. Sleeping allows a process (or thread) to suspend
+    execution for a period of time. This chapter describe the interfaces used
+    for setting timers and for sleeping. It covers the following topics:
+
+        - the classical UNIX APIs for setting interval timers (setitimer() and
+          alarm()) to notify a process when a certain amount of time has
+          passed;
+        - the APIs that allow a process to sleep for a specified interval;
+        - the POSIX.1b clocks and timers APIs;
+        - the Linux-specific timerfd facility, which allows the creation of
+          timers whose expirations can be read from a file descriptor.
+
+SUMMARY
+
+    A process can use setitimer() or alarm() to set a timer, so that it
+    receives a signal after the passage of a specified amount of real or
+    process time. One use of timers is to set an upper limit on the time for
+    which a system call can block.
+
+    Applications that need to suspend execution for a specified interval of
+    real time can use a variety of sleep functions for this purpose.
+
+    Linux 2.6 implements the POSIX.1b extensions that define API for
+    high-precision clocks and timers. POSIX.1b timers provide a number of
+    advantages over traditional (setitimer()) UNIX timers. We can: create
+    multi timers; chose the signal that is delivered on timer expiration;
+    retrieve the timer overrun count in order to determine if a timer has
+    expired multiple times since the last expiration notification; and chose
+    to receive timer notifications via execution of a thread function instead
+    of delivery of a signal.
+
+    The Linux-specific timerfd API provides a set of interfaces for creating
+    timers that is similar to the POSIX timers API, but allows timer
+    notifications to be read via a file descriptor. This file descriptor can
+    be monitored using select(), poll() and epoll().

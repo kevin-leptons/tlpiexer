@@ -1,0 +1,14 @@
+CHAPTER 16
+EXTENDED ATTRIBUTES
+
+OVERVIEW
+
+    This chapter describes extended attributes (EAs), which allow arbitrary
+    metadata, in the form of name-value pairs, to be associated with file
+    i-nodes. EAs were added to Linux in version 2.6.
+
+SUMMARY
+
+    From version 2.6 onward, Linux supports extended attributes, which allow
+    arbitrary metadata to be associated with a file, in the form of name-value
+    pairs.

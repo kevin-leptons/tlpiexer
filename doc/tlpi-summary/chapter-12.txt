@@ -1,0 +1,20 @@
+CHAPTER 12
+SYSTEM AND PROCESS INFORMATION
+
+OVERVIEW
+
+    In this chapter, we look at ways of accessing a variety of system and
+    process information. The primary focus of the chapter is a discussion of
+    the /proc file system. We also describe the uname() system call, which is
+    used to retrieve various system identifiers.
+
+SUMMARY
+
+    The /proc file system expose a range of kernel information to application
+    programs. Each /proc/PID subdirectory contains files and subdirectories
+    that provide information about the process whose ID matches PID. Various
+    other files and directories under /proc expose system-wide information
+    that programs can read and, in some case, modify.
+
+    The uname() system call allows us to discover the UNIX implementation and
+    the type of machine on which an application is running.

@@ -1,0 +1,43 @@
+CHAPTER 58
+SOCKETS: FUNDAMENTALS OF TCP/IP NETWORKS
+
+OVERVIEW
+
+    This chapter provides an introduction to computer networking concepts and
+    the TCP/IP networking protocols. An understanding of these topics is
+    necessary to make effective use of Internet domain sockets, which are
+    described in the next chapter.
+
+    Starting in this chapter, we begin mentioning various Request for
+    Comments (RFC) documents. Each of the networking protocols discussed in
+    this book is formally described in an RFC. We provide further information
+    about RFCs, as well a list of RFCs of particular relevance to the material
+    covered in this this book, in Section 58.7.
+
+SUMMARY
+
+    TCP/IP is a layered networking protocol suite. At the bottom layer of the
+    TCP/IP protocol stack is the IP network-layer protocol. IP transmits data
+    in the form of datagrams. IP is connectionless, meaning that datagrams
+    transmitted between source and destination hosts may take different routes
+    across the network. IP is unreliable, in that it provides no guarantee
+    that datagrams will arrive in order or unduplicated, or even arrive at
+    all. If reliability is required, then it must be provided via the use of a
+    reliable higher-layer protocol (e.g., TCP), or within an application.
+
+    The original version of IP is IPv4. In the early 1990s, a new version of
+    IP, IPv6 was devised. The most notable difference between IPv4 and IPv6 is
+    that IPv4 uses 32 bits to represent a host address, while IPv6 uses 128
+    bits, thus allowing for a much large number of hosts on the world-wide
+    Internet. Currently, IPv4 remains the most widely used version of IP,
+    although in coming years, it is likely to be supplanted by IPv6.
+
+    Various transport-layer protocols are layered on top of IP, of which the
+    most widely used are UDP and TCP. UDP is an unreliable datagram protocol.
+    TCP is a reliable, connection-oriented, byte-stream protocol. TCP handles
+    all of the details of connection establishment and termination. TCP also
+    packages data into segments for transmission by IP, and provides sequence
+    numbering for these segments so that they can be acknowledged and
+    assembled in the correct order by the receiver. In addition, TCP provides
+    flow control, to prevent a fast sender from overwhelming a slow receiver,
+    and congestion control, to prevent a fast sender overwhelming the network.

@@ -1,0 +1,45 @@
+CHAPTER 04
+FILE I/0 THE UNIVERSAL I/O MODEL
+
+OVERVIEW
+
+    We now start to look in earnest at the system call API. File are a good
+    place to start, since they are central to the UNIX philosophy. the focus
+    this chapter is the system calls used for performing file input and ouput.
+
+    We introduce the concept of a file descriptor, and then look at the system
+    calls that constitute the so-called universal I/0 model. These are the
+    system calls that open and close a file, and read and write data.
+
+    We focus on I/O on disk files. However, much of the material covered here
+    is relevant for later chapters, since the same system calls are used of
+    performing I/O on all types of files, such as pipes and terminals.
+
+    Chapter 5 extends the discussion in this chapter with further details on
+    file I/0. One other aspect of file I/0, buffering, is complex enough to
+    deserve its own chapter. Chapter 13 covers I/0 buffering in the kernel and
+    in the stdio library.
+
+SUMMARY
+
+    In order to perform I/0 on a regular file, we must first obtain a file
+    descriptor using open(). I/O is then performed using read() and write().
+    After performing all I/O, we should free the file descriptor and its
+    associated resources using close(). These system calls can be used to
+    perform I/0 on all types of files.
+
+    The fact that all file types and device drivers implement the same I/0
+    interface allows for universality of I/O, meaning that a program can
+    typically be used with any type of file without requiring code that is
+    specific to the file type.
+
+    For each open file, the kernel maintains a file offset, which determines
+    the location at which the next read or write will occur. The file offset
+    is implicitly updated by reads and writes. Using lseek(), we can
+    explicitly reposition the file offset to any location within the file or
+    past the end of the file. Writing data at a position beyond the previous
+    end of the file creates a hole in the file. Reads from a file hole return
+    bytes containing zeros.
+
+    The ioctl() system call is a catchall for device and file operations that
+    don't fit into the standard file I/O model.

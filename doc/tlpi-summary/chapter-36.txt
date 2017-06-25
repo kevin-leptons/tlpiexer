@@ -1,0 +1,28 @@
+CHAPTER 36
+PROCESS RESOURCES
+
+OVERVIEW
+
+    Each process consumes system resources such as memory and CPU time. This
+    chapter looks at resource-related system calls. We begin with the
+    getrusage() system call, which allows a process to monitor the resources
+    that it has used or that its children have used. We then look at the
+    setrlimit() and getrlimit() system calls, which can be used to change and
+    retrieve limits on the calling process's consumption of various resources.
+
+SUMMARY
+
+    Process consume various system resources. The getrusage() system call
+    allows a process to monitor of the resources consumed by itself and its
+    children.
+
+    The setrlimit() and getrlimit() system calls allow a process to set and
+    retrieve limits on its consumption of various resources. Each resource
+    limit has two components: a soft limit and a hard limit, which acts as a
+    ceiling on the value of the soft limit. An unprivileged process can set
+    soft limit for a resource to any in the range from 0 up to the hard limit,
+    but can only lower the hard limit. A privileged process can make any
+    changes to either limit value, as long as the soft limit is less than or
+    equal to the hard limit. If a process encounters a soft limit, it is
+    typically informed of the fact either by receiving a signal or via failure
+    of the system call that attempt to exceed the limit.

@@ -1,0 +1,54 @@
+CHAPTER 45
+SYSTEM V MESSAGE QUEUES
+
+OVERVIEW
+
+    This chapter describes System V message queues. Message queues allow
+    processes to exchange data in the form of messages. Although message
+    queues are similar to pipes and FIFOs in some respects, they also differ
+    in important ways:
+
+        The handle used to refer to a message queue is the identifier returned
+        by a call to msgget(). These identifiers are not the same as the file
+        descriptors used for most other forms of I/O on UNIX system.
+
+        Communication via message queues is message-oriented; that is, the
+        reader receives whole messages, as written by the writer. It is not
+        possible to read part of a message, leaving the remainder in the
+        queue, or to read multiple messages at a time. This contrasts with
+        pipes, which provide an undifferentiated stream of bytes (i.e., with
+        pipes, the reader can read an arbitrary number of bytes at a time,
+        irrespective of the size of data blocks written by the writer.
+
+        In addition to containing data, each message has an integer type.
+        Message can be retrieved from a queue in first-in, first-out order
+        or retrieved by type.
+
+    At the end of this chapter (Section 46.9), we summarize a number of
+    limitations of System V message queues. These limitations lead us to the
+    conclusion that, where possible, new applications should avoid the use of
+    System V message queues in favor of other IPC mechanisms such as FIFOs,
+    POSIX message queues, and sockets. However, when message queues were
+    initially devised, these alternative mechanisms were unavailable or were
+    not widespread across UNIX implementations.
+
+    Consequently, there are various existing applications that employ message
+    queues, and this fact forms one of the primary motivations for describing
+    them.
+
+SUMMARY
+
+    System V message queues allow processes to communicate by exchanging
+    messages consisting of a numeric type plus a body containing arbitrary
+    data. The distinguishing features of message queues are that message
+    boundaries are preserved and that the receivers(s) can select messages by
+    type, rather than reading messages in first-in, first-out order.
+
+    Various factors led us to conclude that other IPC mechanisms are usually
+    preferable to System V message queues. One major difficulty is that message
+    queues are not referred to using file descriptors. This means that we
+    can't employ various alternative I/O models with message queues; in
+    particular, it is complex to simultaneously monitor both message queues
+    and file descriptors to see if I/O is possible. Furthermore, the fact that
+    message queues are connectionless (i.e., not reference counted) makes it
+    difficult for an application to know when a queue may be deleted safely.

@@ -1,0 +1,37 @@
+CHAPTER 17
+ACCESS CONTROL LISTS
+
+OVERVIEW
+
+    Section 15.4 described the traditional UNIX (and Linux) file permissions
+    scheme. For many applications, this scheme is sufficient. However, some
+    applications need finer control over the permissions granted to specific
+    users and groups. To meet this requirement, many UNIX systems implement an
+    extension to the traditional UNIX file permissions model known as access
+    control lists (ACLs). ACLs allow file permissions to be specified per user
+    or per group, for an arbitrary number of users and groups. Linux provides
+    ACLs from kernel 2.6 onward.
+
+    ACLs have never been formally standardized for UNIX systems. An attempt
+    was made to do this in the form of the POSIX.1e and POSIX.2c draft
+    standards, which aimed to specify, respectively, the application program
+    interface (API) and the shell commands for ACLs (as well as other
+    features, such as capabilities). Ultimately, this standardization attempt
+    foundered, and these draft standards were withdrawn. Nevertheless, many
+    UNIX implementations (including Linux) base their ACL implementations on
+    these draft standards (usually on the final version, Draft 17). However,
+    because there are many variations across ACL implementation (in part
+    springing from the incompleteness of the draft standards), writing
+    portable programs that use ACLs presents some difficulties.
+
+    This chapter provides a description of ACLs and a brief tutorial on their
+    use. It also describes some of the library functions used for
+    manipulating and retrieving ACLs. We won't go into detail on all of these
+    functions because there are so many of them (For the details, see the
+    manual pages).
+
+SUMMARY
+
+    From version 2.6 onward, Linux supports ACLs. ACLs extend the traditional
+    UNIX file permissions model, allowing file permissions to be controlled on
+    a per-user and per-group basis.

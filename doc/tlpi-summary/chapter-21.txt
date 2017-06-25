@@ -1,0 +1,55 @@
+CHAPTER 21
+SIGNAL: SIGNAL HANDLER
+
+OVERVIEW
+
+    This chapter continues the description of signals begun in the previous
+    chapter. It focus on signal handlers, and extends the discussion started
+    in Section 20.4. Among the topics we consider are the following:
+
+        - how to design a signal handler, which necessitates a discussion of
+          reentrancy and async-signal-safe functions;
+        - alternatives to performing a normal return from signal handler, in
+          particular, the use of a nonlocal goto for this purpose;
+        - handling or signals on an alternate stack;
+        - the use of the sigaction() SA_SIGINFO flag to allow a signal handler
+          to obtain more  detailed information about the signal that caused
+          its invocations;
+        - how a blocking system call may be interrupted by a signal handler,
+          and how the call can be restarted if desired.
+
+
+SUMMARY
+
+    In this chapter, we considered a range of factors that affect operation
+    and design of signal handlers.
+
+    Because signals are not queued, a signal handler must sometimes be coded
+    to deal with the possibility that multiple events of a particular type
+    have occurred, even though only one signal was delivered. The issue of
+    reentrancy affects how we can update global variables and limits the set
+    of functions that we can safely call from a signal handler.
+
+    Instead of returning, a signal handler can terminate in variety of other
+    ways, including calling _exit(), terminating the process by sending a
+    signal (kill(), raise(), or abort()), or performing a nonlocal goto. Using
+    sigsetjmp() and siglongjmp() provides a program with explicit control of
+    the treatment of the process signal mask when nonlocal goto is performed.
+
+    We can use sigaltstack() to define an alternate signal stack for a
+    process. This is an area of memory that is used instead of the standard
+    process stack when invoking a signal handler. An alternate signal stack is
+    useful in case where the standard stack has been exhausted by growing too
+    large (at which point the kernel sends a SIGSEGV signal to the process).
+
+    The sigaction() SA_SIGINFO flag allows us to establish a signal handler
+    that receives addtional information about a signal. This information is
+    supplied via a siginfo_t structure whose address is passed as an argument
+    to the signal handler.
+
+    When a signal handler interrupts a blocked system calls, the system call
+    fails with the error EINTR. We can take advantage of this behavior to, for
+    example, set a timer on a blocking system call. Interrupted system calls
+    can be manually restarted if desired. Alternatively, establishing the
+    signal handler with the sigaction() SA_RESTART flag cause many (but not
+    all) system calls to be automatically restarted.

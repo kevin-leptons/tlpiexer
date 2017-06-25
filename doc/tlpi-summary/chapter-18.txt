@@ -1,0 +1,69 @@
+CHAPTER 18
+DIRECTORIES AND LINKS
+
+OVERVIEW
+
+    In this chapter, we conclude our discussion of file-related topics by
+    looking at directories and links. After an overview of their
+    implementation, we describe the system calls used to create and remove
+    directories and links. We then look at library functions that allow a
+    program to scan the contents of a single directory and to walk though
+    (i.e., examine each file in) a directory tree.
+
+    Each process has two directory-related attributes: a root directory, which
+    determines the point from which absolute pathnames are interpreted, and a
+    current working directory, which determines the point from which relative
+    pathnames are interpreted. We look at the system calls that allow a
+    process to change both of these attributes.
+
+    We finish the chapter with a discussion of library functions that are used
+    to resolve pathnames and to parse them into directory and filename
+    components.
+
+OVERVIEW
+
+    An i-node doesn't contains a file's name. Instead, files are assigned
+    names via entries in directories, which are tables listing filename and
+    i-node number correspondences. These directory entries are called (hard)
+    links. A file may have multiple links, and of which enjoy equal status.
+    Links are created and removed using ink() and unlink(). A file can be
+    renamed using the rename() system call.
+
+    A symbolic (or soft) link is created using symlink(). Symbolic links are
+    similar to hard links in some respects, with the differences that symbolic
+    links can cross file-system boundaries and can refer to directories. A
+    symbolic link is just a file containing the name of another file; this
+    name may be retrieved using readlink(). A symbolic link is not included in
+    the (target) i-node's link count, and it may be lef dangling if the file
+    name to which it refers is removed. Some system calls automatically
+    dereference (follows) symbolic links; others do not. In some cases, two
+    version of a system call are provided: one that dereferences symbolic
+    links and another that does not. Example are stat() and lstat().
+
+    Directories are created with mkdir() and removed using rmdir(). To scan
+    the contents of a directory, we can use opendir(), readdir(), and related
+    functions. The nftw() functions allows a program to walk an entire
+    directory tree, calling a programmer-defined function to operate on each
+    file in the tree.
+
+    The remove() function can be used to remove a file (i.e., a link) or an
+    empty directory.
+
+    Each process has a root directory, which determines the point from which
+    absolute pathnames are interpreted, and a current working directory, which
+    determines the point from which relative pathnames are interpreted. The
+    chroot() and chdir() system calls are used to change these attributes. The
+    getcwd() function returns a process's current woking directory.
+
+    Linux provides a set of system calls (e.g., openat()) that behave like
+    their traditional counterparts (e.g., open()), except that relative
+    pathnames can be interpreted with respect to the directory specified by a
+    file descriptor supplied to the call (instead of using process's current
+    working directory). This is useful for avoiding certain types of race
+    conditions and for implementing per-thread virtual working directories.
+
+    The realpath() function resolves a pathname dereferencing all symbolic
+    links and resolving all references to . and .. to corresponding
+    directories to yield a corresponding absolute pathname. The dirname() and
+    basename() functions can be used to parse a pathname into directory and
+    filename components.

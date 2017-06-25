@@ -1,0 +1,42 @@
+CHAPTER 48
+SYSTEM V SHARED MEMORY
+
+OVERVIEW
+
+    This chapter describes System V shared memory. Shared memory allows two or
+    more processes to shared the same region (usually referred to as a
+    segment) of physical memory. Since a shared memory segment becomes part
+    of a process's user-space memory, no kernel intervention is required for
+    IPC. All that is required is that one process copies data into the shared
+    memory; that data is immediately available to all other processes sharing
+    the same segment. This provides fast IPC by comparison with techniques
+    such as pipes or message queues, where the sending process copies data
+    from a buffer in user space into kernel memory and the receiving process
+    copies in the reverse directions (Each process also incurs the overhead
+    of a system call to perform the copy operation).
+
+    On the other hand, the fact that IPC using shared memory is not mediated
+    by the kernel means that, typically, some method of synchronization is
+    required so that processes don't simultaneously access the shared memory
+    (e.g., two processes performing simultaneous updates, or one process
+    fetching data from the shared memory while another process is in the middle
+    of updating it). System V semaphore are a natural method for such
+    synchronization. Other methods, such as POSIX semaphores (Chapter 53) and
+    file locks (Chapter 55), are also possible.
+
+SUMMARY
+
+    Shared memory allows two or more processes to share the same pages of
+    memory. No kernel intervention is required to exchange data via shared
+    memory. Once a process has copied data into a shared memory segment, that
+    data is immediately visible to other processes. Shared memory provides
+    fast IPC, although this speed is advantage is somewhat offset by the fact
+    that normally we must use some type of synchronization technique, such as
+    a System V semaphore, to synchronize access to the shared memory.
+
+    The recommended approach when attaching a shared memory segment is to
+    allow the kernel to choose the address at which the segment is attached in
+    the process's virtual address space. This means that the segment may
+    reside at different virtual addresses in different processes. For this
+    reason, any references to addresses within the segment should be maintained
+    as relative offsets, rather than absolute pointers.

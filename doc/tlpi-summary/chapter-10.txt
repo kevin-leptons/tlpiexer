@@ -1,0 +1,50 @@
+CHAPTER 10
+TIME
+
+OVERVIEW
+
+    Within a program, we may be interested in two kinds of time:
+
+        - Real time: This is the time as measured either from some standard
+          point (calendar time) or from some fixed point (typically the start)
+          in the life of a process (elapsed or wall clock time). Obtaining the
+          calendar time is useful to programs thats, for example, timestamp
+          database records or files. Measuring elapsed time is useful for a
+          program that takes periodic actions or makes regular measurements
+          from some external input device.
+
+        - Process time: This is the amount of CPU time used by a process.
+          Measuring process time is useful for checking or optimizing the
+          performance of a program or algorithm.
+
+    Most computer architectures have a built-in hardware clock that enables
+    the kernel to measure real and process time. In this chapter, we look at
+    system calls for dealing with both sorts of time, and library functions
+    for converting between human-readable and internal representations of
+    time. Since human-readable representations of time are dependent on the
+    geographical location and on linguistic and cultural conventions,
+    discussion of these representations leads us into an investigation of
+    timezones and locales.
+
+
+SUMMARY
+
+    Real time corresponds to the everyday definition of time. When real time
+    is measured from some standard point, we refer to it as calendar time, by
+    contrast with elapsed time, which is measured from some point (usually the
+    start) in the life of a process.
+
+    Process time is the amount of CPU time used by a process, and is divided
+    into user and system components.
+
+    Various system calls enable us to get and set the system clock value
+    (i.e., calendar time, as measured in seconds since the Epoch), and a range
+    of library functions allow conversions between calendar time and other
+    time formats, including broken-down time and human-readable character
+    strings. Describing such conversions took us into a discussion of locales
+    and internationalization.
+
+    Using and displaying times and dates is an important part of many
+    applications, and we'll make frequent use of the functions described in
+    this chapter in later parts of this book. We also say a little more about
+    the measurement of time in Chapter 23.

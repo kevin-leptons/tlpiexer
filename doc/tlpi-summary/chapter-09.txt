@@ -1,0 +1,50 @@
+CHAPTER 09
+PROCESS CREDENTIALS
+
+OVERVIEW
+
+    Every process has a set of associated numeric user identifiers (UIDs) and
+    group identifiers (GIDs). Sometimes, these are referred to as process
+    credentials. These identifiers are as follows:
+
+        - real user ID and group ID
+        - effective user ID and group ID
+        - saved set-user-ID and saved set-group-ID
+        - file-system user ID and group ID (Linux-specific)
+        - supplementary group IDs
+
+    In this chapter, we look in detail at the purpose of these process
+    identifiers and describe the system calls and library functions that can
+    be used to retrieve and change them. We also discuss the notion of
+    privileged and unprivileged processes, and the use of the set-user-ID and
+    set-group-ID mechanisms, which allow the creation of programs that run
+    with the privileges of a specified user or group.
+
+SUMMARY
+
+    Each process has a number of associated user and group IDs (credentials).
+    The real IDs define the ownership of the process. On most UNIX
+    implementations, the effective IDs are used to determine a process's
+    permissions when accessing resources such as files. On Linux, however, the
+    file-system IDs are used for determining permissions for accessing files,
+    while effective IDs are used for other permission checks (Because the
+    file-system IDs normally have the same values as corresponding effective
+    IDs, Linux behaves in the same way as other UNIX implementations when
+    checking file permission). A process's supplementary group IDs are a
+    further set of groups of which the process is considered to be a member for
+    the purpose of permission checking. Various system calls and library
+    functions allow a process to retrieve and change its user and group IDs.
+
+    When a set-user-ID program is run, the effective user ID of the process is
+    set to that of the owner of the file. This mechanism allows a user to
+    assume the identity, and thus the privileges, of another user while
+    running a particular program. Correspondingly, set-group-ID programs
+    change the effective group ID of the process running a program. The saved
+    set-user-ID and saved set-group-ID allow set-user-ID and set-group-ID
+    programs to temporarily drop and then later resume privileges.
+
+    The user ID 0 is special. Normally, a single user account, named root,
+    has this user ID. Processes with an effective user ID of are
+    privileged-that is, they are exempt from many of the permission checks
+    normally performed when a process makes various system calls (such as
+    those used to arbitrarily change the various process user and group IDs).

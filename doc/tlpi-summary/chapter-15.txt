@@ -1,0 +1,47 @@
+CHAPTER 15
+FILE ATTRIBUTES
+
+OVERVIEW
+
+    In this chapter, we investigate various attributes of file (file
+    metadata). We begin with a description of the stat() system call, which
+    returns a structure containing many of these attributes, including file
+    timestamps, file ownership, and file permissions. We then go on to look at
+    various system calls used to change these attributes (The discussion of
+    file permissions continues in Chapter 17, where we look at access control
+    lists). We conclude the chapter with a discussion of i-node flags (also
+    known as ext2 extended file attributes), which control various aspects of
+    the treatment of files by the kernel.
+
+SUMMARY
+
+    The stat() system call retrieves information about a file (metadata), most
+    of which is drawn from the file i-node. This information include file
+    ownership, file permissions, and file timestamps.
+
+    A program can update a file's last access time and last modification time
+    using utime(), utimes(), and various similar interfaces.
+
+    Each file has an associated user ID (owner) and group ID, as well as set
+    of permission bits. For permissions purposes, file users are divided into
+    three categories: owner (also known as user), group, and other. The same
+    scheme is used with directories, although the permission bits have
+    slightly different meanings. The chown() and chmod() system calls change
+    the ownership and permissions of a file. The umask() system call sets a
+    mask of permission bits that are always terned off when the calling
+    process creates a file.
+
+    Three additional permission bits are used for files and directories. The
+    set-user-ID and set-group-ID permission bits can be applied to program
+    files to create programs that cause the executing process to gain
+    privilege by assuming a different effective user of group identity (that
+    of the program file). For directories residing on file systems mounted
+    using the nogrpid (sysvgroups) option, the set-group-ID permission bit can
+    be used to control whether new files created in the directory inherit their
+    group ID from the process's effective group ID or from the parent
+    directory's group ID. When applied to directories, the sticky permission
+    bit acts as the restricted deletion flag.
+
+    I-node flags control various behaviors of files and directories. Although
+    originally defined for ext2, these flags are now supported on several
+    other file systems.

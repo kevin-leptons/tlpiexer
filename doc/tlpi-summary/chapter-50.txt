@@ -1,0 +1,37 @@
+CHAPTER 50
+VIRTUAL MEMORY OPERATIONS
+
+OVERVIEW
+
+    This chapter looks at various system calls that perform operations on a
+    process's virtual address space:
+
+        - The mprotect() system call changes the protection on a region of
+          virutal memory.
+        - The mlock() and mlockall() system calls lock a region of virtual
+          memory into physical memory, thus preventing it from being swapped
+          out.
+        - The mincore() system call allows a process to determine whether the
+          pages in a region of virtual memory are resident in physical memory.
+        - The madvise() system call allows a process to advise the kernel
+          about its future patterns of usages of a virtual memory region.
+
+    Some of these system calls find particular use in conjunction with shared
+    memory regions (Chapter 48, 49, and 54), but they can be applied to any
+    region of a process's virtual memory.
+
+SUMMARY
+
+    In this chapter, we considered various operations that can be performed on
+    a process's virtual memory:
+
+        - The mprotect() system call changes the protection on a region of
+          virtual memory.
+        - The mlock() and mlockall() system calls lock part or all of a
+          process's  virutal address space, respectively, into physical
+          memory.
+        - The mincore() system call reports which pages in a virtual memory
+          region are currently resident in physical memory
+        - The madvise() system call and the posix_madvise() function allow a
+          process to advise the kernel about the process's expected patterns
+          of memory use.

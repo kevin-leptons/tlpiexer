@@ -1,0 +1,37 @@
+CHAPTER 55
+FILE LOCKING
+
+OVERVIEW
+
+    Previous chapters have covered various techniques that processes can use
+    to synchronize their actions, including signals (Chapter 20 to 22) and
+    semaphores (Chapter 47 and 53). In this chapter, we look at further
+    synchronization techniques designed specifically for use with files.
+
+SUMMARY
+
+    File locks allow processes to synchronize access to a file. Linux provides
+    two file locking system calls: the BSD-derived flock() and the System
+    V-derived fcntl(). Although both system calls are available on most UNIX
+    implementations, only fcntl() locking is standardized in SUSv3.
+
+    The flock() system call locks an entire file. Two types of locks may be
+    placed shared locks, which are compatible with shared locks held by other
+    processes, and exclusive locks, which prevent other processes from placing
+    any type of lock.
+
+    The fcntl() system call places locks ("record locks") on any region of a
+    file, ranging from a single byte to the entire file. Two types of locks
+    may be placed: read locks and write locks, which have similar 
+    compatibility semantics to the shared and exclusive locks placed via
+    flock(). If a blocking (F_SETLKW) lock request would bring about a
+    deadlock situation, the the kernel causes fcntl() to fail (with the
+    error EDEADLK) in one of the affected processes.
+
+    Locks placed using flock() and fcntl() are invisible to one another
+    (except on systems that implement flock() using fcntl()). The locks placed
+    via flock() and fcntl() have different semantics with respect to
+    inheritance across fork() and release when file descriptors are closed.
+
+    The Linux-specific /proc/locks file displays the file locks currently held
+    by all processes on the system.

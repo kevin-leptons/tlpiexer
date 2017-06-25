@@ -1,0 +1,25 @@
+CHAPTER 60
+SOCKETS: SERVER DESIGN
+
+OVERVIEW
+
+    This chapter discusses the fundamentals of designing interactive and
+    concurrent servers and describes inetd, a special daemon designed to
+    facilitate the creation of Internet servers.
+
+SUMMARY
+
+    An interactive server handles one client at a time, processing that
+    client's request(s) completely, before proceeding to the next client.
+    A concurrent server handles multiple clients simultaneously. In high-load
+    scenarios, a traditional concurrent server design that creates a new
+    child process (or thread) for each client may not perform well enough,
+    and we outlined a range of other approaches for concurrently handling
+    large numbers of clients.
+
+    The Internet superserver daemon, inetd, monitors multiple sockets and
+    starts the appropriate servers in response to incoming UDP datagrams or
+    TCP connections. Using inetd allows us to decrease system load by
+    minimizing the number of network server processes on the system, and also
+    simplifies the programming of server processes, since it performs most of
+    the initialization steps required by a server.

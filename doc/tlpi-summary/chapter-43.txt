@@ -1,0 +1,28 @@
+CHAPTER 43
+INTERPROCESS COMMUNICATION OVERVIEW
+
+OVERVIEW
+
+    This chapter presents a brief overview of the facilities that processes
+    and threads can use to communicate with one another and to synchronize
+    their actions. The following chapters provide more details about these
+    facilities.
+
+SUMMARY
+
+    In this chapter, we provided an overview of various facilities that
+    processes (and threads) can use to communicate with one another and to
+    synchronize their actions.
+
+    Among the communication facilities provided on Linux are pipes, FIFOs,
+    sockets, message queues, and shared memory. Synchronization facilities
+    provided on Linux include semaphores and file locks.
+
+    In many cases, we have a choice of several possible techniques for
+    communication and synchronization when performing a given task. In the
+    course of this chapter, we compared the different techniques in various
+    ways, with the aim of highlighting some differences that may influence the
+    choice of one technique over another.
+
+    In the following chapters, we go into each of the communication and
+    synchronization facilities in much more detail.

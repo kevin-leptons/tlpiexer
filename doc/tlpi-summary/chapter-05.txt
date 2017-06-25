@@ -1,0 +1,78 @@
+CHAPTER 05
+FILE I/O FURTHER DETAILS
+
+OVERVIEW
+
+    In this chapter, we extend the discussion of file I/O that we started in
+    the previous chapter.
+
+    In continuing the discussion of the open() system call, we explain the
+    concept of atomicity - the notion that the actions performed by a system
+    call are executed as a single uninterruptible step. This is a necessary
+    requirement for the correct operation of many system calls.
+
+    We introduce another file-related system call, the multipurpose fcntl(),
+    and show one of its uses: fetching and setting open file status flags.
+
+    Next, we look at the kernel data structures used to represent file
+    descriptors and open files. Understanding the relationship between these
+    structures clarifies some of the subtleties of file I/O discussed in
+    subsequent chapters. Building on this model, we then explain how to
+    duplicate file descriptors.
+
+    We then consider some system calls that provide extended read and write
+    functionality. These system calls allow us to perform I/O at a specific
+    location in a file without changing the file offset, and to transfer data
+    to and from multiple buffers in a program.
+
+    We briefly introduce the concept of nonblocking I/O, and describe some
+    extensions provided to support I/O on very large files.
+
+    Since temporary files are used by many system programs, we'll also look at
+    some library functions that allow us to create and use temporary files
+    with randomly generated unique names.
+
+SUMMARY
+
+    In the course of this chapter, we introduced the concept of atomicity,
+    which is crucial to the correct operation of some system calls. In
+    particular, the open() O_EXCL flag allows the caller to ensure that it is
+    the creator of a file, and the open() O_APPEND flag ensures that multiple
+    processes appending data to the same file don't overwrite each other's
+    output.
+
+    the fcntl() system call performs a variety of file control operations,
+    including changing open file status flags and duplicating file
+    descriptors. Duplicating file descriptors is also possible using dup() and
+    dup2().
+
+    We looked at the relationship between file descriptors, open file
+    descriptors, and file i-nodes, and noted that different information is
+    associated with each of these three objects. Duplicate file descriptors
+    refer to the same open file description, and thus share open file status
+    flags and the file offset.
+
+    We described a number of system calls that extend the functionality of the
+    conventional read() and write() system calls. The pread() and pwrite()
+    system calls perform I/O at a specified file location without changing the
+    file offset. The readv() and writev() calls perform scatter-gather I/O.
+    The preadv() and pwritev() calls combine scatter-gather I/O functionality
+    with the ability to perform I/O at a specified file location.
+
+    The truncate() and ftruncate() system calls can be used to decrease the
+    size of a file, discarding the excess bytes, or to increase the size,
+    padding with a zero-filled file hole.
+
+    We briefly introduced the concept of nonblocking I/O, and we'll return to
+    it in later chapters.
+
+    The LFS specification defines a set of extensions that allow processes
+    running on 32-bit systems to perform operations on files whose size is too
+    large to be represented in 32 bits.
+
+    The numbered files in the /dev/fd virtual directory allow a process to
+    access its own open files via file descriptor numbers, which can be
+    particularly useful in shell commands.
+
+    The mkstemp() and tmpfile() functions allow an application to create
+    temporary files.

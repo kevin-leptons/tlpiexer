@@ -1,0 +1,33 @@
+CHAPTER 64
+PSEUDOTERMINALS
+
+OVERVIEW
+
+    A pseudoterminal is a virtual device that provides an IPC channel. On one
+    end of the channel is a program that expects to be connected to a terminal
+    device. On the other end is a program that drives the terminal-oriented
+    program by using the channel to send it input and read its output.
+
+    This chapter describes the use of pseudoterminals, showing how they are
+    employed in applications such as terminal emulators, the script(1)
+    program, and programs such as ssh, which provide network login services.
+
+SUMMARY
+
+    A pseudoterminal pair consists of a connected master device and slave
+    device. Together, these two devices provide a bidirectional IPC channel.
+    The benefit of a pseudoterminal is that, on the slave side of the pair, we
+    can connect a terminal-oriented program that driven by the program that
+    has opened the master device. The pseudoterminal slave behaves just like a
+    conventional terminal. All of the operations that can be applied to a
+    conventional terminal can be applied to the slave, and input transmitted
+    from the master to the salve is interpreted in the same manner as keyboard
+    input is interpreted on a conventional terminal.
+
+    One common use of pseudoterminals is in applications that provide network
+    login services. However, pseudoterminals are also used in many other
+    programs, such as terminal emulators and the script(1) program.
+
+    Different pseudoterminals APIs arose on System V and BSD. Linux supports
+    both APIs, but the System V API forms the basis for the pseudoterminal API
+    that is standardized in SUSv3.

@@ -1,0 +1,66 @@
+CHAPTER 14
+FILE SYSTEMS
+
+OVERVIEW
+
+    In Chapters 4, 5 and 13, we looked at file I/O, with a particular focus on
+    regular (ie., disk) files. In this and the following chapters, we go into
+    detail on a range of file-related topics:
+
+        - This chapter looks at file systems.
+        - Chapter 15 describes various attributes associated with a file,
+          including the timestamps, ownership, and permissions.
+        - Chapters 16, 17 consider two new features of Linux 2.6: extended
+          attributes and access control lists (ACLs). Extended attributes are
+          method of associating arbitrary metadata with a file. ACLs are an
+          extension of the traditional UNIX file permission model.
+        - Chapter 18 looks at directories and links
+
+    The majority of this chapter is concerned with file system, which are
+    organized collections of files and directories. We explain a range of
+    file-system concepts, sometimes using the traditional Linux ext2 file
+    system as a specific example. We also briefly describe some of the
+    journaling file systems available on Linux.
+
+    We conclude the chapter with a discussion of the system calls used to
+    mount and unmount a file system, and the library functions used to obtain
+    information about mounted file system.
+
+SUMMARY
+
+    Devices are represented by entries in the /dev directory. Each device has
+    a corresponding device driver, which implements a standard set of
+    operations, including those corresponding to the open(), read(), write(),
+    and close() system calls. A device may be real, meaning that there is a
+    corresponding hardware device, or virtual, meaning that no hardware device
+    exists, but the kernel nevertheless provides a device driver that
+    implements an API that is the same as real device.
+
+    A hard disk is divided into one or more partitions, each of which may
+    contain a file system. A file system is an organized collection of regular
+    files and directories. Linux implements a wide variety of file systems,
+    including the traditional ext2 file system. The ext2 file system is
+    conceptually similar to early UNIX file systems, consisting of a boot
+    block, a superblock, an i-node table, and a data area containing file data
+    blocks. Each file has an entry in the file system's i-node table. This
+    entry contains various information about the file, including its type,
+    size, link count, ownership, permissions, timestamps, and pointers to the
+    file's data blocks.
+
+    Linux provides a range of journaling file systems, including Reiserfs,
+    ext3, ext4, XFS, JFS, and Btrfs. An journaling file system records
+    metadata updates (and optionally on some file systems, data updates) to a
+    log file before the actual file updates are performed. This means that in
+    the event of a system crash, the log file can be replayed to quickly
+    restore the file system to a consistent state. The key benefit of
+    journaling fiel system is that they avoid the lengthy file-system
+    consistency checks required by conventional UNIX file systems after a
+    system crash.
+
+    All file systems on a Linux system are mounted under a single directory
+    tree, with the directory / at its root. The location at which a file
+    system is mounted in the directory tree is called its mount point.
+
+    A privileged process can mount an unmount a file system using the mount()
+    and unmount() system calls. Information about a mounted file system can be
+    retrieved using statvfs().

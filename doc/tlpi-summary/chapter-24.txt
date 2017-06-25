@@ -1,0 +1,26 @@
+CHAPTER 24
+PROCESS CREATION
+
+OVERVIEW
+
+    In this and the next three chapters, we look at how a process is created
+    and terminates, and how a process can execute a new program. This chapter
+    covers process creation. However, before diving into that subject, we
+    present a short overview of the main system call covered in these four
+    chapters.
+
+SUMMARY
+
+    The fork() system call creates new process (the child) by making an almost
+    exact duplicate of the calling process (the parent). The vfork() system
+    call is a more efficient version of fork(), but is usually best avoided
+    because of its unusual semantics, whereby the child uses the parent's
+    memory until it either performs an exec() or terminates; in the meantime,
+    execution, execution of the parent process is suspended.
+
+    After a fork() call, we can't rely on the order in which the parent and
+    the child are next scheduled to use the CPU(s). Programs that make
+    assumptions about the order of execution are susceptible to errors known
+    as race conditions. Because the occurrence of such errors depends on
+    external factors such as system load, they can be difficult to find and
+    debug.
