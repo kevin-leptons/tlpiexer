@@ -32,8 +32,8 @@ USAGE
     $ apt-get install git gcc gdb cmake
 
     # source code
-    $ git clone https://github.com/kevin-leptons/tlpi-exer.git
-    $ cd tlpi-exer
+    $ git clone https://github.com/kevin-leptons/tlpiexer.git
+    $ cd tlpiexer
 
     # learning
     # main document is doc/the-linux-programming-interface.pdf
